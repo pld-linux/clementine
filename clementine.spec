@@ -9,6 +9,7 @@ Source0:	http://clementine-player.googlecode.com/files/%{name}_%{version}-1.tar.
 # Source0-md5:	bf89adb26808fec6201499375de95507
 Patch0:		%{name}-dont-bundle-external-lib.patch
 Patch1:		%{name}-static.patch
+BuildRequires:	QtSingleApplication-devel
 BuildRequires:	boost-devel
 BuildRequires:	cmake
 BuildRequires:	desktop-file-utils
@@ -18,7 +19,6 @@ BuildRequires:	libnotify-devel
 BuildRequires:	libqxt-devel
 BuildRequires:	notification-daemon
 BuildRequires:	qt4-build
-BuildRequires:	qtsingleapplication-devel
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite-devel
 BuildRequires:	taglib-devel
@@ -44,7 +44,9 @@ sed -i '/tests/d' CMakeLists.txt
 %build
 install -d build
 cd build
-%cmake ..
+%cmake \
+	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
+	..
 %{__make}
 
 %install
