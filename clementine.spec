@@ -1,7 +1,7 @@
 Summary:	A music player and library organiser
 Name:		clementine
 Version:	0.2
-Release:	0.2
+Release:	0.3
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://code.google.com/p/clementine-player
@@ -20,10 +20,12 @@ BuildRequires:	libnotify-devel
 BuildRequires:	libqxt-devel
 BuildRequires:	notification-daemon
 BuildRequires:	qt4-build
+BuildRequires:	rpmbuild(macros) >= 1.198
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite-devel
 BuildRequires:	taglib-devel
 BuildRequires:	xine-lib-devel
+Requires(post,postun):	desktop-file-utils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -58,6 +60,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post
+%update_desktop_database_post
+
+%postun
+%update_desktop_database_postun
 
 %files
 %defattr(644,root,root,755)
