@@ -1,7 +1,7 @@
 Summary:	A music player and library organiser
 Name:		clementine
 Version:	0.2
-Release:	0.1
+Release:	0.2
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://code.google.com/p/clementine-player
@@ -9,9 +9,10 @@ Source0:	http://clementine-player.googlecode.com/files/%{name}_%{version}-1.tar.
 # Source0-md5:	bf89adb26808fec6201499375de95507
 Patch0:		%{name}-dont-bundle-external-lib.patch
 Patch1:		%{name}-static.patch
+Patch2:		desktop-install.patch
 BuildRequires:	QtSingleApplication-devel
 BuildRequires:	boost-devel
-BuildRequires:	cmake
+BuildRequires:	cmake >= 2.6
 BuildRequires:	desktop-file-utils
 BuildRequires:	gtest-devel
 BuildRequires:	liblastfm-devel
@@ -34,12 +35,13 @@ advantage of Qt4.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 # We already don't use these but just to make sure
 rm -fr 3rdparty
 
-# Don't build tests. They require gmock which is not yet available on Fedora
-sed -i '/tests/d' CMakeLists.txt
+# Don't build tests. They require gmock
+sed -i -e '/tests/d' CMakeLists.txt
 
 %build
 install -d build
@@ -62,4 +64,4 @@ rm -rf $RPM_BUILD_ROOT
 %doc Changelog TODO
 %attr(755,root,root) %{_bindir}/clementine
 %{_desktopdir}/clementine.desktop
-%{_iconsdir}/hicolor/*/apps/application-x-clementine.png
+%{_pixmapsdir}/clementine.png

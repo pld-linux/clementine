@@ -1,0 +1,24 @@
+--- clementine-0.2/dist/clementine.desktop~	2010-01-18 00:12:17.000000000 +0200
++++ clementine-0.2/dist/clementine.desktop	2010-04-24 14:09:59.250159909 +0300
+@@ -6,7 +6,7 @@
+ Comment=Plays music and last.fm streams
+ Exec=clementine
+ TryExec=clementine
+-Icon=application-x-clementine
++Icon=clementine
+ Terminal=false
+ Categories=AudioVideo;Player;Qt;
+ StartupNotify=false
+--- clementine-0.2/src/CMakeLists.txt~	2010-04-23 22:14:47.000000000 +0300
++++ clementine-0.2/src/CMakeLists.txt	2010-04-24 14:07:29.951424256 +0300
+@@ -253,8 +253,8 @@
+ )
+   
+ install(FILES ../dist/clementine_64.png
+-  DESTINATION share/icons/hicolor/64x64/apps/
+-  RENAME application-x-clementine.png
++  DESTINATION share/pixmaps
++  RENAME clementine.png
+ )
+ 
+ install(FILES ../dist/clementine.desktop
