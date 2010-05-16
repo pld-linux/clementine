@@ -5,7 +5,7 @@
 # Conditional build:
 %bcond_without	engine_xine		# without xine engine
 %bcond_without	engine_vlc		# without vlc engine
-%bcond_without	engine_qt-phonon	# without qt-phonon engine
+%bcond_without	engine_qt_phonon	# without qt-phonon engine
 %bcond_without	engine_gstreamer	# without gstreamer engine
 #
 Summary:	A music player and library organiser
@@ -31,11 +31,15 @@ BuildRequires:	QtTest-devel
 BuildRequires:	boost-devel
 BuildRequires:	cmake >= 2.6
 BuildRequires:	desktop-file-utils
+BuildRequires:	gettext-devel
+BuildRequires:	gstreamer-devel
 BuildRequires:	gtest-devel
 BuildRequires:	liblastfm-devel
 BuildRequires:	libnotify-devel
 BuildRequires:	libqxt-devel
 BuildRequires:	notification-daemon
+BuildRequires:	phonon-devel
+BuildRequires:	pkgconfig
 BuildRequires:	qt4-build
 BuildRequires:	qt4-linguist
 BuildRequires:	qt4-qmake
@@ -44,6 +48,7 @@ BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	taglib-devel
+BuildRequires:	vlc-devel
 BuildRequires:	xine-lib-devel
 Requires(post,postun):	desktop-file-utils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -73,7 +78,7 @@ cd build
 	-DENGINE_GSTREAMER_ENABLED=%{?with_engine_gstreamer:ON}%{!?with_engine_gstreamer:OFF} \
 	-DENGINE_LIBVLC_ENABLED=%{?with_engine_vlc:ON}%{!?with_engine_vlc:OFF} \
 	-DENGINE_LIBXINE_ENABLED=%{?with_engine_xine:ON}%{!?with_engine_xine:OFF} \
-	-DENGINE_QT_PHONON_ENABLED=%{?with_engine_qt-phonon:ON}%{!?with_engine_qt-phonon:OFF} \
+	-DENGINE_QT_PHONON_ENABLED=%{?with_engine_qt_phonon:ON}%{!?with_engine_qt_phonon:OFF} \
 	..
 %{__make}
 
