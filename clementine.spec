@@ -1,12 +1,22 @@
+# TODO:
+# - update patch0
+# - add missing BRs
+#
+# Conditional build:
+%bcond_without	engine_xine		# without xine engine
+%bcond_without	engine_vlc		# without vlc engine
+%bcond_without	engine_qt-phonon	# without qt-phonon engine
+%bcond_without	engine_gstreamer	# without gstreamer engine
+#
 Summary:	A music player and library organiser
 Name:		clementine
-Version:	0.2
-Release:	0.3
+Version:	0.3
+Release:	0.1
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://code.google.com/p/clementine-player
-Source0:	http://clementine-player.googlecode.com/files/%{name}_%{version}-1.tar.gz
-# Source0-md5:	bf89adb26808fec6201499375de95507
+Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
+# Source0-md5:	3aff98e41d9bf96717ecf97c780ef086
 Patch0:		%{name}-dont-bundle-external-lib.patch
 Patch1:		%{name}-static.patch
 Patch2:		desktop-install.patch
@@ -45,12 +55,12 @@ advantage of Qt4.
 
 %prep
 %setup -q
-%patch0 -p1
+#%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 
 # We already don't use these but just to make sure
-rm -fr 3rdparty
+#rm -fr 3rdparty
 
 # Don't build tests. They require gmock
 sed -i -e '/tests/d' CMakeLists.txt
@@ -60,6 +70,10 @@ install -d build
 cd build
 %cmake \
 	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
+	-DENGINE_GSTREAMER_ENABLED=%{?with_engine_gstreamer:ON}%{!?with_engine_gstreamer:OFF} \
+	-DENGINE_LIBVLC_ENABLED=%{?with_engine_vlc:ON}%{!?with_engine_vlc:OFF} \
+	-DENGINE_LIBXINE_ENABLED=%{?with_engine_xine:ON}%{!?with_engine_xine:OFF} \
+	-DENGINE_QT_PHONON_ENABLED=%{?with_engine_qt-phonon:ON}%{!?with_engine_qt-phonon:OFF} \
 	..
 %{__make}
 
