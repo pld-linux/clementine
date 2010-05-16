@@ -10,7 +10,14 @@ Source0:	http://clementine-player.googlecode.com/files/%{name}_%{version}-1.tar.
 Patch0:		%{name}-dont-bundle-external-lib.patch
 Patch1:		%{name}-static.patch
 Patch2:		desktop-install.patch
+BuildRequires:	QtCore-devel
+BuildRequires:	QtDBus-devel
+BuildRequires:	QtGui-devel
+BuildRequires:	QtNetwork-devel
+BuildRequires:	QtOpenGL-devel
 BuildRequires:	QtSingleApplication-devel
+BuildRequires:	QtSql-devel
+BuildRequires:	QtTest-devel
 BuildRequires:	boost-devel
 BuildRequires:	cmake >= 2.6
 BuildRequires:	desktop-file-utils
@@ -20,9 +27,12 @@ BuildRequires:	libnotify-devel
 BuildRequires:	libqxt-devel
 BuildRequires:	notification-daemon
 BuildRequires:	qt4-build
+BuildRequires:	qt4-linguist
+BuildRequires:	qt4-qmake
 BuildRequires:	rpmbuild(macros) >= 1.198
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite-devel
+BuildRequires:	sqlite3-devel
 BuildRequires:	taglib-devel
 BuildRequires:	xine-lib-devel
 Requires(post,postun):	desktop-file-utils
