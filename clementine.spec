@@ -1,6 +1,7 @@
 # TODO:
 # - update patch0
 # - add missing BRs
+# - Gstreamer error: "A text/uri-list decoder plugin is required to play this stream, but not installed." 
 #
 # Conditional build:
 %bcond_without	engine_xine		# without xine engine
@@ -9,6 +10,7 @@
 %bcond_without	engine_gstreamer	# without gstreamer engine
 #
 Summary:	A music player and library organiser
+Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
 Version:	0.3
 Release:	0.1
@@ -51,12 +53,18 @@ BuildRequires:	taglib-devel
 BuildRequires:	vlc-devel
 BuildRequires:	xine-lib-devel
 Requires(post,postun):	desktop-file-utils
+Requires:	QtSql-sqlite3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Clementine is a modern music player and library organiser. It is
 largely a port of Amarok 1.4, with some features rewritten to take
 advantage of Qt4.
+
+%description -l hu.UTF-8
+Clementine egy modern zenelejátszó és gyűjtemény kezelő. Túlnyomórészt
+az Amarok 1.4 port-ja, néhány funkciója újraírva, hogy kihasználhassa
+a Qt4 előnyeit.
 
 %prep
 %setup -q
