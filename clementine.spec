@@ -20,7 +20,6 @@ URL:		http://code.google.com/p/clementine-player
 Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
 # Source0-md5:	dbfec89142910a60502674234daf01df
 Patch0:		%{name}-dont-bundle-external-lib.patch
-Patch1:		%{name}-static.patch
 Patch2:		desktop-install.patch
 BuildRequires:	QtCore-devel
 BuildRequires:	QtDBus-devel
@@ -69,7 +68,6 @@ a Qt4 előnyeit.
 %prep
 %setup -q
 #%patch0 -p1
-#%patch1 -p1
 %patch2 -p1
 
 # We already don't use these but just to make sure
