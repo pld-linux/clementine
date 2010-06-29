@@ -70,7 +70,7 @@ a Qt4 előnyeit.
 %setup -q
 #%patch0 -p1
 #%patch1 -p1
-#%patch2 -p1
+%patch2 -p1
 
 # We already don't use these but just to make sure
 #rm -fr 3rdparty
