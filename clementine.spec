@@ -12,13 +12,13 @@
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
-Version:	0.3
+Version:	0.4
 Release:	0.1
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://code.google.com/p/clementine-player
 Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
-# Source0-md5:	3aff98e41d9bf96717ecf97c780ef086
+# Source0-md5:	dbfec89142910a60502674234daf01df
 Patch0:		%{name}-dont-bundle-external-lib.patch
 Patch1:		%{name}-static.patch
 Patch2:		desktop-install.patch
@@ -69,8 +69,8 @@ a Qt4 előnyeit.
 %prep
 %setup -q
 #%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+#%patch1 -p1
+#%patch2 -p1
 
 # We already don't use these but just to make sure
 #rm -fr 3rdparty
