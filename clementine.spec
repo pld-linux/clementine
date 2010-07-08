@@ -56,7 +56,6 @@ BuildRequires:	qt4-linguist
 BuildRequires:	qt4-qmake
 BuildRequires:	rpmbuild(macros) >= 1.198
 BuildRequires:	sed >= 4.0
-BuildRequires:	sqlite-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	taglib-devel >= 1.6
 BuildRequires:	vlc-devel
