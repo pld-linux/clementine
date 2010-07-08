@@ -6,18 +6,19 @@
 #    The following engines are NOT supported by clementine developers:
 #     vlc xine qt-phonon
 # - apply patches to libprojectM.spec and use
+# - make engines pluggable not statically linked, then could enable the bconds
 #
 # Conditional build:
-%bcond_without	engine_xine		# without xine engine
-%bcond_without	engine_vlc		# without vlc engine
-%bcond_without	engine_qt_phonon	# without qt-phonon engine
+%bcond_with		engine_xine		# without xine engine
+%bcond_with		engine_vlc		# without vlc engine
+%bcond_with		engine_qt_phonon	# without qt-phonon engine
 %bcond_without	engine_gstreamer	# without gstreamer engine
-#
+
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
 Version:	0.4.2
-Release:	0.1
+Release:	0.2
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://code.google.com/p/clementine-player
