@@ -13,6 +13,7 @@
 %bcond_with		engine_vlc		# without vlc engine
 %bcond_with		engine_qt_phonon	# without qt-phonon engine
 %bcond_without	engine_gstreamer	# without gstreamer engine
+%bcond_with		static_sqlite	# with static sqlite3
 
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
@@ -56,12 +57,12 @@ BuildRequires:	qt4-linguist
 BuildRequires:	qt4-qmake
 BuildRequires:	rpmbuild(macros) >= 1.198
 BuildRequires:	sed >= 4.0
-BuildRequires:	sqlite3-devel
+%{!?with_static_sqlite:BuildRequires:	sqlite3-devel}
 BuildRequires:	taglib-devel >= 1.6
 BuildRequires:	vlc-devel
 BuildRequires:	xine-lib-devel
 Requires(post,postun):	desktop-file-utils
-Requires:	QtSql-sqlite3
+%{!?with_static_sqlite:Requires:	QtSql-sqlite3}
 # while we do not link (yet), we use datafiles
 Requires:	libprojectM
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -86,7 +87,7 @@ a Qt4 előnyeit.
 
 # We already don't use these but just to make sure
 rm -rf 3rdparty/gmock
-rm -rf 3rdparty/qsqlite
+%{!?with_static_sqlite:rm -rf 3rdparty/qsqlite}
 rm -rf 3rdparty/qtsingleapplication
 rm -rf 3rdparty/qxt
 rm -rf 3rdparty/qtiocompressor
@@ -104,6 +105,7 @@ cd build
 	-DENGINE_LIBVLC_ENABLED=%{?with_engine_vlc:ON}%{!?with_engine_vlc:OFF} \
 	-DENGINE_LIBXINE_ENABLED=%{?with_engine_xine:ON}%{!?with_engine_xine:OFF} \
 	-DENGINE_QT_PHONON_ENABLED=%{?with_engine_qt_phonon:ON}%{!?with_engine_qt_phonon:OFF} \
+	-DSTATIC_SQLITE=%{?with_static_sqlite:ON}%{!?with_static_sqlite:OFF} \
 	..
 %{__make}
 
