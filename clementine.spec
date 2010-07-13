@@ -14,6 +14,7 @@
 %bcond_with		engine_qt_phonon	# without qt-phonon engine
 %bcond_without	engine_gstreamer	# without gstreamer engine
 %bcond_with		static_sqlite	# with static sqlite3
+%bcond_with		static_projectm	# with static projectM
 
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
@@ -35,22 +36,23 @@ BuildRequires:	QtNetwork-devel
 BuildRequires:	QtOpenGL-devel
 BuildRequires:	QtSingleApplication-devel
 BuildRequires:	QtSql-devel
-BuildRequires:	QtTest-devel
+%{?with_tests:BuildRequires:	QtTest-devel}
 BuildRequires:	boost-devel
 BuildRequires:	cmake >= 2.6
-BuildRequires:	desktop-file-utils
+#BuildRequires:	desktop-file-utils
 BuildRequires:	gettext-devel
-BuildRequires:	gstreamer-devel
-BuildRequires:	gstreamer-devel >= 0.10
-BuildRequires:	gstreamer-plugins-base-devel >= 0.10
+%{?with_engine_gstreamer:BuildRequires:	gstreamer-devel >= 0.10}
+%{?with_engine_gstreamer:BuildRequires:	gstreamer-plugins-base-devel >= 0.10}
 BuildRequires:	gtest-devel
 BuildRequires:	liblastfm-devel
 BuildRequires:	libnotify-devel
-#BuildRequires:	libprojectM-devel
+%{!?with_static_projectm:BuildRequires:	libprojectM-devel}
+%{?with_static_projectm:BuildRequires:	glew-devel}
+#%{?with_static_projectm:BuildRequires:  ftgl-devel >= 2.1.3}
 BuildRequires:	libqxt-devel
 #BuildRequires:	libqxt-devel >= 0.6.0-0.2
 BuildRequires:	notification-daemon
-BuildRequires:	phonon-devel
+%{?with_engine_phonon:BuildRequires:	phonon-devel}
 BuildRequires:	pkgconfig
 BuildRequires:	qt4-build
 BuildRequires:	qt4-linguist
@@ -59,8 +61,8 @@ BuildRequires:	rpmbuild(macros) >= 1.198
 BuildRequires:	sed >= 4.0
 %{!?with_static_sqlite:BuildRequires:	sqlite3-devel}
 BuildRequires:	taglib-devel >= 1.6
-BuildRequires:	vlc-devel
-BuildRequires:	xine-lib-devel
+%{?with_engine_vlc:BuildRequires:	vlc-devel}
+%{?with_engine_xine:BuildRequires:	xine-lib-devel}
 Requires(post,postun):	desktop-file-utils
 %{!?with_static_sqlite:Requires:	QtSql-sqlite3}
 # while we do not link (yet), we use datafiles
@@ -91,6 +93,7 @@ rm -rf 3rdparty/gmock
 rm -rf 3rdparty/qtsingleapplication
 rm -rf 3rdparty/qxt
 rm -rf 3rdparty/qtiocompressor
+%{!?with_static_projectm:rm -rf 3rdparty/libprojectM}
 
 # Don't build tests. They require gmock
 sed -i -e '/add_subdirectory(tests)/d' CMakeLists.txt
