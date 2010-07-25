@@ -13,7 +13,7 @@
 %bcond_with		engine_vlc		# without vlc engine
 %bcond_with		engine_qt_phonon	# without qt-phonon engine
 %bcond_without	engine_gstreamer	# without gstreamer engine
-%bcond_with		static_sqlite	# with static sqlite3
+%bcond_without	static_sqlite	# with static sqlite3
 %bcond_with		static_projectm	# with static projectM
 
 Summary:	A music player and library organiser
