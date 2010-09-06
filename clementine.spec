@@ -66,6 +66,7 @@ BuildRequires:	taglib-devel >= 1.6
 Requires(post,postun):	desktop-file-utils
 %{!?with_static_sqlite:Requires:	QtSql-sqlite3}
 # while we do not link (yet), we use datafiles
+Requires:	QtSingleApplication >= 2.6-3
 Requires:	libprojectM
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
