@@ -1,3 +1,6 @@
+Upstream-Tracker-URL: http://code.google.com/p/clementine-player/issues/detail?id=703
+Signed-off-by: Elan Ruusamäe <glen@pld-linux.org>
+
 --- clementine-0.5/src/main.cpp~	2010-08-29 15:34:07.000000000 +0300
 +++ clementine-0.5/src/main.cpp	2010-09-06 16:39:29.482708643 +0300
 @@ -35,7 +35,6 @@
