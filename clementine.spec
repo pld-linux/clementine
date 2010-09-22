@@ -19,22 +19,21 @@
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
-Version:	0.5
-Release:	0.1
+Version:	0.5.1
+Release:	1
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://www.clementine-player.org/
 Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
-# Source0-md5:	59a94906394c7e22da567841770dab86
+# Source0-md5:	4a18e971a1a7a98b8c7516c8e1c597e9
 Patch0:		desktop-install.patch
-Patch1:		no-private_header.patch
 BuildRequires:	QtCore-devel
 BuildRequires:	QtDBus-devel
 BuildRequires:	QtGui-devel
 BuildRequires:	QtIOCompressor-devel
 BuildRequires:	QtNetwork-devel
 BuildRequires:	QtOpenGL-devel
-BuildRequires:	QtSingleApplication-devel >= 2.6-3
+BuildRequires:	QtSingleApplication-devel >= 2.6-4
 BuildRequires:	QtSql-devel
 %{?with_tests:BuildRequires:	QtTest-devel}
 BuildRequires:	boost-devel
@@ -64,9 +63,9 @@ BuildRequires:	taglib-devel >= 1.6
 %{?with_engine_vlc:BuildRequires:	vlc-devel}
 %{?with_engine_xine:BuildRequires:	xine-lib-devel}
 Requires(post,postun):	desktop-file-utils
+Requires:	QtSingleApplication >= 2.6-4
 %{!?with_static_sqlite:Requires:	QtSql-sqlite3}
 # while we do not link (yet), we use datafiles
-Requires:	QtSingleApplication >= 2.6-3
 Requires:	libprojectM
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -86,7 +85,6 @@ a Qt4 előnyeit.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 # We already don't use these but just to make sure
 rm -rf 3rdparty/gmock
