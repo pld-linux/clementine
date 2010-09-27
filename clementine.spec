@@ -19,13 +19,13 @@
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
-Version:	0.5.1
+Version:	0.5.2
 Release:	1
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://www.clementine-player.org/
 Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
-# Source0-md5:	4a18e971a1a7a98b8c7516c8e1c597e9
+# Source0-md5:	25122edeec1582c2b3a7e537e3b2fd18
 Patch0:		desktop-install.patch
 BuildRequires:	QtCore-devel
 BuildRequires:	QtDBus-devel
