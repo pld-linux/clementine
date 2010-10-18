@@ -1,0 +1,64 @@
+Do not bundle translations with a binary,
+package them to system dir and use %lang tagging in package.
+
+some paths debug:
+  qWarning() << "language: " << language;
+  qWarning() << "qtpath: " << QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+  qWarning() << "apppath: " << a.applicationDirPath();
+  qWarning() << "curdir: " << QDir::currentPath();
+
+TODO: add install target
+TODO: make it configurable via cmake params.
+
+Author: Elan Ruusamäe <glen@pld-linux.org>
+
+--- clementine-0.5.3/src/main.cpp~	2010-10-18 23:59:12.000000000 +0300
++++ clementine-0.5.3/src/main.cpp	2010-10-18 23:59:15.876170584 +0300
+@@ -176,7 +176,7 @@
+ 
+   // Resources
+   Q_INIT_RESOURCE(data);
+-  Q_INIT_RESOURCE(translations);
++  //Q_INIT_RESOURCE(translations);
+ 
+   // Has the user forced a different language?
+   QString language = options.language();
+@@ -187,9 +187,15 @@
+   }
+ 
+   // Translations
++  // Qt: system path
+   LoadTranslation("qt", QLibraryInfo::location(QLibraryInfo::TranslationsPath), language);
++  // Clementine: system path
++  LoadTranslation("clementine", QLibraryInfo::location(QLibraryInfo::TranslationsPath), language);
++  // Clementine: QRC
+   LoadTranslation("clementine", ":/translations", language);
++  // Clementine: application path
+   LoadTranslation("clementine", a.applicationDirPath(), language);
++  // Clementine: current dir
+   LoadTranslation("clementine", QDir::currentPath(), language);
+ 
+   // Icons
+--- clementine-0.5.3/cmake/Translations.cmake~	2010-10-18 23:59:51.000000000 +0300
++++ clementine-0.5.3/cmake/Translations.cmake	2010-10-18 23:59:53.487509786 +0300
+@@ -63,12 +63,12 @@
+     list(APPEND ${outfiles} ${_qm_filepath})
+   endforeach (_lang)
+ 
+-  # Generate a qrc file for the translations
+-  set(_qrc ${CMAKE_CURRENT_BINARY_DIR}/${ADD_PO_DIRECTORY}/translations.qrc)
+-  file(WRITE ${_qrc} "<RCC><qresource prefix=\"/${ADD_PO_DIRECTORY}\">")
+-  foreach(_lang ${ADD_PO_LANGUAGES})
+-    file(APPEND ${_qrc} "<file>${po_prefix}${_lang}.qm</file>")
+-  endforeach(_lang)
+-  file(APPEND ${_qrc} "</qresource></RCC>")
+-  qt4_add_resources(${outfiles} ${_qrc})
++#  # Generate a qrc file for the translations
++#  set(_qrc ${CMAKE_CURRENT_BINARY_DIR}/${ADD_PO_DIRECTORY}/translations.qrc)
++#  file(WRITE ${_qrc} "<RCC><qresource prefix=\"/${ADD_PO_DIRECTORY}\">")
++#  foreach(_lang ${ADD_PO_LANGUAGES})
++#    file(APPEND ${_qrc} "<file>${po_prefix}${_lang}.qm</file>")
++#  endforeach(_lang)
++#  file(APPEND ${_qrc} "</qresource></RCC>")
++#  qt4_add_resources(${outfiles} ${_qrc})
+ endmacro(add_po)
