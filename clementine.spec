@@ -7,6 +7,10 @@
 #     vlc xine qt-phonon
 # - apply patches to libprojectM.spec and use
 # - make engines pluggable not statically linked, then could enable the bconds
+#11:04:19  bs> glen, let me take a look at it [IN]
+#11:09:13  bs> glen, look at src/CMakeList.txt, remove lines 634-643  [IN]
+#11:19:32  bs> glen, aaaa, no no, it will them ignore them while building... so you've got another problem then i thought... [IN]
+#11:20:29  bs> glen, try too look in src/translations in CMakeList.txt and find out where the translations are installed per defualt, and then change the destination [IN]
 #
 # Conditional build:
 %bcond_with		engine_xine		# without xine engine
@@ -20,7 +24,7 @@ Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
 Version:	0.5.3
-Release:	1
+Release:	2
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://www.clementine-player.org/
@@ -36,21 +40,29 @@ BuildRequires:	QtOpenGL-devel
 BuildRequires:	QtSingleApplication-devel >= 2.6-4
 BuildRequires:	QtSql-devel
 %{?with_tests:BuildRequires:	QtTest-devel}
+BuildRequires:	QtXml-devel
 BuildRequires:	boost-devel
 BuildRequires:	cmake >= 2.6
 #BuildRequires:	desktop-file-utils
 #%{?with_static_projectm:BuildRequires:	ftgl-devel >= 2.1.3}
 BuildRequires:	gettext-devel
 %{?with_static_projectm:BuildRequires:	glew-devel}
+BuildRequires:	glib2-devel
 %{?with_engine_gstreamer:BuildRequires:	gstreamer-devel >= 0.10}
 %{?with_engine_gstreamer:BuildRequires:	gstreamer-plugins-base-devel >= 0.10}
 BuildRequires:	gtest-devel
+BuildRequires:	libgpod-devel >= 0.7.92
+BuildRequires:	libimobiledevice-devel
 BuildRequires:	liblastfm-devel
+BuildRequires:	libmtp-devel
 BuildRequires:	libnotify-devel
+BuildRequires:	libplist-devel
 %{!?with_static_projectm:BuildRequires:	libprojectM-devel >= 1:2.0.1-4}
 BuildRequires:	libqxt-devel
 #BuildRequires:	libqxt-devel >= 0.6.0-0.2
+BuildRequires:	libxml2-devel
 BuildRequires:	notification-daemon
+BuildRequires:	phonon
 %{?with_engine_phonon:BuildRequires:	phonon-devel}
 BuildRequires:	pkgconfig
 BuildRequires:	qt4-build
@@ -60,6 +72,7 @@ BuildRequires:	rpmbuild(macros) >= 1.577
 BuildRequires:	sed >= 4.0
 %{!?with_static_sqlite:BuildRequires:	sqlite3-devel}
 BuildRequires:	taglib-devel >= 1.6
+BuildRequires:	usbmuxd-devel
 %{?with_engine_vlc:BuildRequires:	vlc-devel}
 %{?with_engine_xine:BuildRequires:	xine-lib-devel}
 Requires(post,postun):	desktop-file-utils
