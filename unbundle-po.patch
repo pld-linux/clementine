@@ -39,11 +39,9 @@ Author: Elan Ruusamäe <glen@pld-linux.org>
    LoadTranslation("clementine", QDir::currentPath(), language);
  
    // Icons
---- clementine-0.5.3/cmake/Translations.cmake~	2010-10-18 23:59:51.000000000 +0300
-+++ clementine-0.5.3/cmake/Translations.cmake	2010-10-18 23:59:53.487509786 +0300
-@@ -63,12 +63,12 @@
-     list(APPEND ${outfiles} ${_qm_filepath})
-   endforeach (_lang)
+--- clementine-0.5.3/cmake/Translations.cmake	2010-10-18 23:59:53.487509786 +0300
++++ clementine-0.5.3/cmake/Translations.cmake	2010-10-19 01:42:52.112825900 +0300
+@@ -65,10 +65,22 @@
  
 -  # Generate a qrc file for the translations
 -  set(_qrc ${CMAKE_CURRENT_BINARY_DIR}/${ADD_PO_DIRECTORY}/translations.qrc)
@@ -53,6 +51,18 @@ Author: Elan Ruusamäe <glen@pld-linux.org>
 -  endforeach(_lang)
 -  file(APPEND ${_qrc} "</qresource></RCC>")
 -  qt4_add_resources(${outfiles} ${_qrc})
++  # install .qm
++  set(_potBasename "clementine")
++  foreach (_lang ${ADD_PO_LANGUAGES})
++    set(_qm_filename "clementine_${_lang}.qm")
++    set(_qm_filepath "${CMAKE_CURRENT_BINARY_DIR}/${ADD_PO_DIRECTORY}/${_qm_filename}")
++
++    install(FILES ${_qm_filepath} DESTINATION share/locale/${_lang}/LC_MESSAGES RENAME ${_potBasename}.qm)
++    set(_gmoFiles ${_gmoFiles} ${_gmoFile})
++  endforeach (_lang)
++
++  add_custom_target(translations ALL DEPENDS ${_gmoFiles})
++
 +#  # Generate a qrc file for the translations
 +#  set(_qrc ${CMAKE_CURRENT_BINARY_DIR}/${ADD_PO_DIRECTORY}/translations.qrc)
 +#  file(WRITE ${_qrc} "<RCC><qresource prefix=\"/${ADD_PO_DIRECTORY}\">")
