@@ -1,5 +1,4 @@
 # TODO:
-# - add missing BRs
 # - Gstreamer error: "A text/uri-list decoder plugin is required to play this stream, but not installed."
 # -- Building engines: gst
 # -- Skipping engines: vlc xine qt-phonon
@@ -7,10 +6,6 @@
 #     vlc xine qt-phonon
 # - apply patches to libprojectM.spec and use
 # - make engines pluggable not statically linked, then could enable the bconds
-#11:04:19  bs> glen, let me take a look at it [IN]
-#11:09:13  bs> glen, look at src/CMakeList.txt, remove lines 634-643  [IN]
-#11:19:32  bs> glen, aaaa, no no, it will them ignore them while building... so you've got another problem then i thought... [IN]
-#11:20:29  bs> glen, try too look in src/translations in CMakeList.txt and find out where the translations are installed per defualt, and then change the destination [IN]
 #
 # Conditional build:
 %bcond_with		engine_xine		# without xine engine
@@ -31,6 +26,8 @@ URL:		http://www.clementine-player.org/
 Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
 # Source0-md5:	3411a0e31bdab7a6693048e934996f40
 Patch0:		desktop-install.patch
+Patch1:		unbundle-po.patch
+Patch2:		build-languages-dynamic.patch
 BuildRequires:	QtCore-devel
 BuildRequires:	QtDBus-devel
 BuildRequires:	QtGui-devel
@@ -68,6 +65,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	qt4-build
 BuildRequires:	qt4-linguist
 BuildRequires:	qt4-qmake
+BuildRequires:	rpmbuild(find_lang) = 1.33
 BuildRequires:	rpmbuild(macros) >= 1.577
 BuildRequires:	sed >= 4.0
 %{!?with_static_sqlite:BuildRequires:	sqlite3-devel}
@@ -98,6 +96,8 @@ a Qt4 előnyeit.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 # We already don't use these but just to make sure
 rm -rf 3rdparty/gmock
@@ -112,6 +112,7 @@ sed -i -e '/add_subdirectory(tests)/d' CMakeLists.txt
 
 %build
 install -d build
+install -d build/src/translations
 cd build
 %cmake \
 	-DBUNDLE_PROJECTM_PRESETS=OFF \
@@ -133,6 +134,8 @@ rm -rf $RPM_BUILD_ROOT
 
 rm $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/scalable/apps/application-x-clementine.svg
 
+%find_lang %{name} --with-qm
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -142,7 +145,7 @@ rm -rf $RPM_BUILD_ROOT
 %postun
 %update_desktop_database_postun
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc Changelog TODO
 %attr(755,root,root) %{_bindir}/clementine
