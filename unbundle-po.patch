@@ -52,10 +52,10 @@ Author: Elan Ruusamäe <glen@pld-linux.org>
 -    // The regex captures the "ru" from "clementine_ru.qm"
 -    if (!lang_re.exactMatch(filename))
 +//  QDir dir(":/translations/");
-+  QDir localeDir("/usr/share/locale");
++  QDir localeDir(QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 +  QStringList dirList = localeDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
 +  foreach (const QString& code, dirList) {
-+    if (!QFile::exists( "/usr/share/locale/" + code + "/LC_MESSAGES/clementine.qm")) {
++    if (!QFile::exists(QLibraryInfo::location(QLibraryInfo::TranslationsPath) + "/" + code + "/LC_MESSAGES/clementine.qm")) {
        continue;
 +    }
  
