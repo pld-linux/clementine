@@ -15,6 +15,7 @@
 %bcond_without	static_sqlite	# with static sqlite3
 %bcond_with		static_projectm	# with static projectM
 
+%define		qtver	4.5
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
@@ -28,16 +29,17 @@ Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
 Patch0:		desktop-install.patch
 Patch1:		unbundle-po.patch
 Patch2:		build-languages-dynamic.patch
-BuildRequires:	QtCore-devel
-BuildRequires:	QtDBus-devel
-BuildRequires:	QtGui-devel
+Patch3:		qt-ver.patch
+BuildRequires:	QtCore-devel >= %{qtver}
+BuildRequires:	QtDBus-devel >= %{qtver}
+BuildRequires:	QtGui-devel >= %{qtver}
 BuildRequires:	QtIOCompressor-devel
-BuildRequires:	QtNetwork-devel
-BuildRequires:	QtOpenGL-devel
+BuildRequires:	QtNetwork-devel >= %{qtver}
+BuildRequires:	QtOpenGL-devel >= %{qtver}
 BuildRequires:	QtSingleApplication-devel >= 2.6-4
-BuildRequires:	QtSql-devel
-%{?with_tests:BuildRequires:	QtTest-devel}
-BuildRequires:	QtXml-devel
+BuildRequires:	QtSql-devel >= %{qtver}
+%{?with_tests:BuildRequires:	QtTest-devel >= %{qtver}}
+BuildRequires:	QtXml-devel >= %{qtver}
 BuildRequires:	boost-devel
 BuildRequires:	cmake >= 2.6
 #BuildRequires:	desktop-file-utils
@@ -62,7 +64,7 @@ BuildRequires:	notification-daemon
 BuildRequires:	phonon
 %{?with_engine_phonon:BuildRequires:	phonon-devel}
 BuildRequires:	pkgconfig
-BuildRequires:	qt4-build
+BuildRequires:	qt4-build >= %{qtver}
 BuildRequires:	qt4-linguist
 BuildRequires:	qt4-qmake
 BuildRequires:	rpmbuild(find_lang) = 1.33
@@ -75,7 +77,7 @@ BuildRequires:	usbmuxd-devel
 %{?with_engine_xine:BuildRequires:	xine-lib-devel}
 Requires(post,postun):	desktop-file-utils
 Requires:	QtSingleApplication >= 2.6-4
-%{!?with_static_sqlite:Requires:	QtSql-sqlite3}
+%{!?with_static_sqlite:Requires:	QtSql-sqlite3 >= %{qtver}}
 # while we do not link (yet), we use datafiles
 Requires:	libprojectM
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -98,6 +100,7 @@ a Qt4 előnyeit.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # We already don't use these but just to make sure
 rm -rf 3rdparty/gmock
