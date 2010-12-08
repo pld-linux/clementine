@@ -9,16 +9,16 @@
  Terminal=false
  Categories=AudioVideo;Player;Qt;
  StartupNotify=false
---- clementine-0.4/src/CMakeLists.txt	2010-06-28 19:47:58.000000000 +0000
-+++ clementine-0.4/src/CMakeLists.txt	2010-06-29 20:49:41.000000000 +0000
-@@ -546,8 +546,8 @@
-   )
+--- clementine-0.5.90/dist/CMakeLists.txt~	2010-10-24 16:16:44.000000000 +0300
++++ clementine-0.5.90/dist/CMakeLists.txt	2010-12-09 00:20:22.298618631 +0200
+@@ -14,8 +14,8 @@
  
-   install(FILES ../dist/clementine_64.png
+ if (NOT APPLE)
+   install(FILES clementine_64.png
 -    DESTINATION share/icons/hicolor/64x64/apps/
 -    RENAME application-x-clementine.png
 +    DESTINATION share/pixmaps
 +    RENAME clementine.png
    )
  
-   install(FILES ../dist/clementine.desktop
+   install(FILES ../data/icon.svg

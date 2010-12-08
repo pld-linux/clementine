@@ -19,17 +19,15 @@
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
-Version:	0.5.3
-Release:	3
+Version:	0.6
+Release:	0.1
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://www.clementine-player.org/
-Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
-# Source0-md5:	3411a0e31bdab7a6693048e934996f40
+Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}rc1.tar.gz
+# Source0-md5:	cbe2b70a8df53b19e5d881a674708c5d
 Patch0:		desktop-install.patch
 Patch1:		unbundle-po.patch
-Patch2:		build-languages-dynamic.patch
-Patch3:		qt-ver.patch
 BuildRequires:	QtCore-devel >= %{qtver}
 BuildRequires:	QtDBus-devel >= %{qtver}
 BuildRequires:	QtGui-devel >= %{qtver}
@@ -96,11 +94,9 @@ az Amarok 1.4 port-ja, néhány funkciója újraírva, hogy kihasználhassa
 a Qt4 előnyeit.
 
 %prep
-%setup -q
+%setup -q -n clementine-0.5.90
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 # We already don't use these but just to make sure
 rm -rf 3rdparty/gmock
