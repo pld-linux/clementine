@@ -24,8 +24,8 @@ Release:	0.1
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://www.clementine-player.org/
-Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}rc1.tar.gz
-# Source0-md5:	cbe2b70a8df53b19e5d881a674708c5d
+Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
+# Source0-md5:	7b7ee4c16f648a15eb2cff9ed2163e0e
 Patch0:		desktop-install.patch
 Patch1:		unbundle-po.patch
 BuildRequires:	QtCore-devel >= %{qtver}
@@ -94,7 +94,7 @@ az Amarok 1.4 port-ja, néhány funkciója újraírva, hogy kihasználhassa
 a Qt4 előnyeit.
 
 %prep
-%setup -q -n clementine-0.5.90
+%setup -q
 %patch0 -p1
 %patch1 -p1
 
