@@ -77,6 +77,7 @@ BuildRequires:	usbmuxd-devel
 Requires(post,postun):	desktop-file-utils
 Requires:	QtSingleApplication >= 2.6-4
 %{!?with_static_sqlite:Requires:	QtSql-sqlite3 >= %{qtver}}
+Requires:	gstreamer-audio-effects-base
 # while we do not link (yet), we use datafiles
 Requires:	libprojectM
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
