@@ -15,12 +15,12 @@
 %bcond_without	static_sqlite	# with static sqlite3
 %bcond_with		static_projectm	# with static projectM
 
-%define		qtver	4.5
+%define     qtver	%(pkg-config --silence-errors --modversion QtCore 2>/dev/null || echo ERROR)
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
 Version:	0.6
-Release:	0.1
+Release:	1
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://www.clementine-player.org/
@@ -30,6 +30,7 @@ Patch0:		desktop-install.patch
 Patch1:		unbundle-po.patch
 BuildRequires:	QtCore-devel >= %{qtver}
 BuildRequires:	QtDBus-devel >= %{qtver}
+BuildRequires:	pkgconfig
 BuildRequires:	QtGui-devel >= %{qtver}
 BuildRequires:	QtIOCompressor-devel
 BuildRequires:	QtNetwork-devel >= %{qtver}
