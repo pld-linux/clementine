@@ -20,7 +20,7 @@ Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
 Version:	0.6
-Release:	1
+Release:	2
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://www.clementine-player.org/
@@ -30,7 +30,6 @@ Patch0:		desktop-install.patch
 Patch1:		unbundle-po.patch
 BuildRequires:	QtCore-devel >= %{qtver}
 BuildRequires:	QtDBus-devel >= %{qtver}
-BuildRequires:	pkgconfig
 BuildRequires:	QtGui-devel >= %{qtver}
 BuildRequires:	QtIOCompressor-devel
 BuildRequires:	QtNetwork-devel >= %{qtver}
@@ -42,7 +41,6 @@ BuildRequires:	QtXml-devel >= %{qtver}
 BuildRequires:	QtXmlPatterns-devel >= %{qtver}
 BuildRequires:	boost-devel
 BuildRequires:	cmake >= 2.6
-#BuildRequires:	desktop-file-utils
 #%{?with_static_projectm:BuildRequires:	ftgl-devel >= 2.1.3}
 BuildRequires:	gettext-devel
 %{?with_static_projectm:BuildRequires:	glew-devel}
@@ -52,6 +50,7 @@ BuildRequires:	glib2-devel
 BuildRequires:	gtest-devel
 BuildRequires:	libgpod-devel >= 0.7.92
 BuildRequires:	libimobiledevice-devel
+BuildRequires:	libindicate-qt-devel
 BuildRequires:	liblastfm-devel
 BuildRequires:	libmtp-devel
 BuildRequires:	libnotify-devel
@@ -64,17 +63,19 @@ BuildRequires:	notification-daemon
 BuildRequires:	phonon
 %{?with_engine_phonon:BuildRequires:	phonon-devel}
 BuildRequires:	pkgconfig
+BuildRequires:	pkgconfig
 BuildRequires:	qt4-build >= %{qtver}
 BuildRequires:	qt4-linguist
 BuildRequires:	qt4-qmake
 BuildRequires:	rpmbuild(find_lang) = 1.33
-BuildRequires:	rpmbuild(macros) >= 1.577
+BuildRequires:	rpmbuild(macros) >= 1.596
 BuildRequires:	sed >= 4.0
 %{!?with_static_sqlite:BuildRequires:	sqlite3-devel}
 BuildRequires:	taglib-devel >= 1.6
 BuildRequires:	usbmuxd-devel
 %{?with_engine_vlc:BuildRequires:	vlc-devel}
 %{?with_engine_xine:BuildRequires:	xine-lib-devel}
+Requires:	hicolor-icon-theme
 Requires(post,postun):	desktop-file-utils
 Requires:	QtSingleApplication >= 2.6-4
 %{!?with_static_sqlite:Requires:	QtSql-sqlite3 >= %{qtver}}
@@ -114,7 +115,6 @@ sed -i -e '/add_subdirectory(tests)/d' CMakeLists.txt
 
 %build
 install -d build
-install -d build/src/translations
 cd build
 %cmake \
 	-DBUNDLE_PROJECTM_PRESETS=OFF \
@@ -138,14 +138,23 @@ rm $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/scalable/apps/application-x-clementi
 
 %find_lang %{name} --with-qm
 
+install -d $RPM_BUILD_ROOT%{_iconsdir}/hicolor/24x24/apps
+cp -a $RPM_BUILD_ROOT{%{_datadir}/icons/ubuntu-mono-light/apps/24,%{_iconsdir}/hicolor/24x24/apps}/clementine-panel-grey.png
+cp -a $RPM_BUILD_ROOT{%{_datadir}/icons/ubuntu-mono-light/apps/24,%{_iconsdir}/hicolor/24x24/apps}/clementine-panel.png
+
+# don't want to depend on ubuntu themes
+rm -rf $RPM_BUILD_ROOT%{_datadir}/icons/ubuntu-*
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
 %update_desktop_database_post
+%update_icon_cache hicolor
 
 %postun
 %update_desktop_database_postun
+%update_icon_cache hicolor
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -153,3 +162,5 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/clementine
 %{_desktopdir}/clementine.desktop
 %{_pixmapsdir}/clementine.png
+%{_iconsdir}/hicolor/*/apps/clementine-panel-grey.png
+%{_iconsdir}/hicolor/*/apps/clementine-panel.png
