@@ -38,7 +38,6 @@ BuildRequires:	QtSingleApplication-devel >= 2.6-4
 BuildRequires:	QtSql-devel >= %{qtver}
 %{?with_tests:BuildRequires:	QtTest-devel >= %{qtver}}
 BuildRequires:	QtXml-devel >= %{qtver}
-BuildRequires:	QtXmlPatterns-devel >= %{qtver}
 BuildRequires:	boost-devel
 BuildRequires:	cmake >= 2.6
 #%{?with_static_projectm:BuildRequires:	ftgl-devel >= 2.1.3}
@@ -46,28 +45,23 @@ BuildRequires:	gettext-devel
 %{?with_static_projectm:BuildRequires:	glew-devel}
 BuildRequires:	glib2-devel
 %{?with_engine_gstreamer:BuildRequires:	gstreamer-devel >= 0.10}
-%{?with_engine_gstreamer:BuildRequires:	gstreamer-plugins-base-devel >= 0.10}
 BuildRequires:	gtest-devel
 BuildRequires:	libgpod-devel >= 0.7.92
 BuildRequires:	libimobiledevice-devel
 BuildRequires:	libindicate-qt-devel
 BuildRequires:	liblastfm-devel
 BuildRequires:	libmtp-devel
-BuildRequires:	libnotify-devel
 BuildRequires:	libplist-devel
 %{!?with_static_projectm:BuildRequires:	libprojectM-devel >= 1:2.0.1-4}
 BuildRequires:	libqxt-devel
-#BuildRequires:	libqxt-devel >= 0.6.0-0.2
 BuildRequires:	libxml2-devel
-BuildRequires:	notification-daemon
-BuildRequires:	phonon
 %{?with_engine_phonon:BuildRequires:	phonon-devel}
 BuildRequires:	pkgconfig
 BuildRequires:	pkgconfig
 BuildRequires:	qt4-build >= %{qtver}
 BuildRequires:	qt4-linguist
 BuildRequires:	qt4-qmake
-BuildRequires:	rpmbuild(find_lang) = 1.33
+BuildRequires:	rpmbuild(find_lang) >= 1.33
 BuildRequires:	rpmbuild(macros) >= 1.596
 BuildRequires:	sed >= 4.0
 %{!?with_static_sqlite:BuildRequires:	sqlite3-devel}
@@ -115,6 +109,7 @@ sed -i -e '/add_subdirectory(tests)/d' CMakeLists.txt
 
 %build
 install -d build
+install -d build/src/translations
 cd build
 %cmake \
 	-DBUNDLE_PROJECTM_PRESETS=OFF \
