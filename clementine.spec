@@ -20,7 +20,7 @@ Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
 Version:	0.6
-Release:	2
+Release:	3
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://www.clementine-player.org/
@@ -69,8 +69,9 @@ BuildRequires:	taglib-devel >= 1.6
 BuildRequires:	usbmuxd-devel
 %{?with_engine_vlc:BuildRequires:	vlc-devel}
 %{?with_engine_xine:BuildRequires:	xine-lib-devel}
-Requires:	hicolor-icon-theme
 Requires(post,postun):	desktop-file-utils
+Requires(post,postun):	gtk-update-icon-cache
+Requires(post,postun):	hicolor-icon-theme
 Requires:	QtSingleApplication >= 2.6-4
 %{!?with_static_sqlite:Requires:	QtSql-sqlite3 >= %{qtver}}
 Requires:	gstreamer-audio-effects-base
