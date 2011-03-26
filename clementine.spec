@@ -19,13 +19,13 @@
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
-Version:	0.6
-Release:	3
+Version:	0.7
+Release:	0.rc1.1
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://www.clementine-player.org/
-Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
-# Source0-md5:	7b7ee4c16f648a15eb2cff9ed2163e0e
+Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}rc1.tar.gz
+# Source0-md5:	a13a226975e12b425606db99a74d8424
 Patch0:		desktop-install.patch
 Patch1:		unbundle-po.patch
 BuildRequires:	QtCore-devel >= %{qtver}
@@ -93,7 +93,7 @@ az Amarok 1.4 port-ja, néhány funkciója újraírva, hogy kihasználhassa
 a Qt4 előnyeit.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}rc1
 %patch0 -p1
 %patch1 -p1
 
@@ -134,13 +134,6 @@ rm $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/scalable/apps/application-x-clementi
 
 %find_lang %{name} --with-qm
 
-install -d $RPM_BUILD_ROOT%{_iconsdir}/hicolor/24x24/apps
-cp -a $RPM_BUILD_ROOT{%{_datadir}/icons/ubuntu-mono-light/apps/24,%{_iconsdir}/hicolor/24x24/apps}/clementine-panel-grey.png
-cp -a $RPM_BUILD_ROOT{%{_datadir}/icons/ubuntu-mono-light/apps/24,%{_iconsdir}/hicolor/24x24/apps}/clementine-panel.png
-
-# don't want to depend on ubuntu themes
-rm -rf $RPM_BUILD_ROOT%{_datadir}/icons/ubuntu-*
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -158,5 +151,3 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/clementine
 %{_desktopdir}/clementine.desktop
 %{_pixmapsdir}/clementine.png
-%{_iconsdir}/hicolor/*/apps/clementine-panel-grey.png
-%{_iconsdir}/hicolor/*/apps/clementine-panel.png
