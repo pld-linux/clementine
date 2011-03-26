@@ -134,6 +134,10 @@ rm $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/scalable/apps/application-x-clementi
 
 %find_lang %{name} --with-qm
 
+install -d $RPM_BUILD_ROOT%{_iconsdir}/hicolor/24x24/apps
+cp -a dist/icons/ubuntu-mono-light/clementine-panel-grey.png $RPM_BUILD_ROOT%{_iconsdir}/hicolor/24x24/apps/clementine-panel-grey.png
+cp -a dist/icons/ubuntu-mono-light/clementine-panel.png $RPM_BUILD_ROOT%{_iconsdir}/hicolor/24x24/apps/clementine-panel.png
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -151,3 +155,5 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/clementine
 %{_desktopdir}/clementine.desktop
 %{_pixmapsdir}/clementine.png
+%{_iconsdir}/hicolor/*/apps/clementine-panel-grey.png
+%{_iconsdir}/hicolor/*/apps/clementine-panel.png
