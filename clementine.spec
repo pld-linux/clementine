@@ -1,17 +1,8 @@
 # TODO:
 # - Gstreamer error: "A text/uri-list decoder plugin is required to play this stream, but not installed."
-# -- Building engines: gst
-# -- Skipping engines: vlc xine qt-phonon
-#    The following engines are NOT supported by clementine developers:
-#     vlc xine qt-phonon
 # - apply patches to libprojectM.spec and use
-# - make engines pluggable not statically linked, then could enable the bconds
 #
 # Conditional build:
-%bcond_with		engine_xine		# without xine engine
-%bcond_with		engine_vlc		# without vlc engine
-%bcond_with		engine_qt_phonon	# without qt-phonon engine
-%bcond_without	engine_gstreamer	# without gstreamer engine
 %bcond_without	static_sqlite	# with static sqlite3
 %bcond_with		static_projectm	# with static projectM
 
@@ -44,7 +35,7 @@ BuildRequires:	cmake >= 2.6
 BuildRequires:	gettext-devel
 %{?with_static_projectm:BuildRequires:	glew-devel}
 BuildRequires:	glib2-devel
-%{?with_engine_gstreamer:BuildRequires:	gstreamer-devel >= 0.10}
+BuildRequires:	gstreamer-devel >= 0.10
 BuildRequires:	gtest-devel
 BuildRequires:	libgpod-devel >= 0.7.92
 BuildRequires:	libimobiledevice-devel
@@ -55,7 +46,6 @@ BuildRequires:	libplist-devel
 %{!?with_static_projectm:BuildRequires:	libprojectM-devel >= 1:2.0.1-4}
 BuildRequires:	libqxt-devel
 BuildRequires:	libxml2-devel
-%{?with_engine_phonon:BuildRequires:	phonon-devel}
 BuildRequires:	pkgconfig
 BuildRequires:	pkgconfig
 BuildRequires:	qt4-build >= %{qtver}
@@ -67,8 +57,6 @@ BuildRequires:	sed >= 4.0
 %{!?with_static_sqlite:BuildRequires:	sqlite3-devel}
 BuildRequires:	taglib-devel >= 1.6
 BuildRequires:	usbmuxd-devel
-%{?with_engine_vlc:BuildRequires:	vlc-devel}
-%{?with_engine_xine:BuildRequires:	xine-lib-devel}
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
@@ -117,10 +105,6 @@ cd build
 	-DUSE_SYSTEM_QTSINGLEAPPLICATION=ON \
 	-DUSE_SYSTEM_QXT=ON \
 	-DUSE_SYSTEM_PROJECTM=ON \
-	-DENGINE_GSTREAMER_ENABLED=%{?with_engine_gstreamer:ON}%{!?with_engine_gstreamer:OFF} \
-	-DENGINE_LIBVLC_ENABLED=%{?with_engine_vlc:ON}%{!?with_engine_vlc:OFF} \
-	-DENGINE_LIBXINE_ENABLED=%{?with_engine_xine:ON}%{!?with_engine_xine:OFF} \
-	-DENGINE_QT_PHONON_ENABLED=%{?with_engine_qt_phonon:ON}%{!?with_engine_qt_phonon:OFF} \
 	-DSTATIC_SQLITE=%{?with_static_sqlite:ON}%{!?with_static_sqlite:OFF} \
 	..
 %{__make}
