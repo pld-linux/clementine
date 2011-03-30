@@ -95,6 +95,8 @@ rm -rf 3rdparty/qtiocompressor
 
 # Don't build tests. They require gmock
 sed -i -e '/add_subdirectory(tests)/d' CMakeLists.txt
+# remove -Wall
+sed -i -e 's/-Wall//' src/CMakeLists.txt
 
 %build
 install -d build
