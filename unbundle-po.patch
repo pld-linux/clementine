@@ -39,8 +39,16 @@ Author: Elan Ruusamäe <glen@pld-linux.org>
    LoadTranslation("clementine", QDir::currentPath(), language);
  
    // Icons
---- clementine-0.5.3/src/ui/settingsdialog.cpp~	2010-10-19 11:24:36.488320486 +0300
-+++ clementine-0.5.3/src/ui/settingsdialog.cpp	2010-10-19 11:24:40.594127569 +0300
+--- clementine-0.5.3/src/ui/behavioursettingspage.cpp~	2010-10-19 11:24:36.488320486 +0300
++++ clementine-0.5.3/src/ui/behavioursettingspage.cpp	2010-10-19 11:24:40.594127569 +0300
+@@ -21,6 +21,7 @@
+ #include "playlist/playlist.h"
+ 
+ #include <QDir>
++#include <QLibraryInfo>
+ 
+ 
+ BehaviourSettingsPage::BehaviourSettingsPage(SettingsDialog* dialog)
 @@ -93,15 +93,22 @@
  
    // Populate the language combo box.  We do this by looking at all the

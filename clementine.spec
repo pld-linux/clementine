@@ -10,13 +10,13 @@
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
-Version:	0.7.1
-Release:	4
+Version:	1.0.1
+Release:	1
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://www.clementine-player.org/
 Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
-# Source0-md5:	997f38d6bbd6b2fa9bf587eb89c5c2ec
+# Source0-md5:	54dc47eb2de5960cd1654e1249a59bc6
 Patch0:		desktop-install.patch
 Patch1:		unbundle-po.patch
 BuildRequires:	QtCore-devel >= %{qtver}
@@ -40,7 +40,7 @@ BuildRequires:	gtest-devel
 BuildRequires:	libgpod-devel >= 0.7.92
 BuildRequires:	libimobiledevice-devel
 BuildRequires:	libindicate-qt-devel
-BuildRequires:	liblastfm-devel
+BuildRequires:	liblastfm-devel >= 0.3.3
 BuildRequires:	libmtp-devel
 BuildRequires:	libplist-devel
 %{!?with_static_projectm:BuildRequires:	libprojectM-devel >= 1:2.0.1-4}
@@ -48,6 +48,8 @@ BuildRequires:	libqxt-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	pkgconfig
 BuildRequires:	pkgconfig
+BuildRequires:	protobuf-devel
+BuildRequires:	qjson-devel
 BuildRequires:	qt4-build >= %{qtver}
 BuildRequires:	qt4-linguist
 BuildRequires:	qt4-qmake
@@ -138,7 +140,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc Changelog TODO
+%doc Changelog
 %attr(755,root,root) %{_bindir}/clementine
 %{_desktopdir}/clementine.desktop
 %{_pixmapsdir}/clementine.png
