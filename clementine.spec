@@ -11,7 +11,7 @@ Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
 Version:	1.0.1
-Release:	2
+Release:	3
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://www.clementine-player.org/
@@ -19,6 +19,7 @@ Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
 # Source0-md5:	54dc47eb2de5960cd1654e1249a59bc6
 Patch0:		desktop-install.patch
 Patch1:		unbundle-po.patch
+Patch2:		libimobiledevice-1.1.2.patch
 BuildRequires:	QtCore-devel >= %{qtver}
 BuildRequires:	QtDBus-devel >= %{qtver}
 BuildRequires:	QtGui-devel >= %{qtver}
@@ -86,6 +87,7 @@ a Qt4 előnyeit.
 %setup -q -n %{name}-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 # We already don't use these but just to make sure
 rm -rf 3rdparty/gmock
