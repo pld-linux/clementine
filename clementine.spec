@@ -11,7 +11,7 @@ Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
 Version:	1.0.1
-Release:	4
+Release:	5
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://www.clementine-player.org/
