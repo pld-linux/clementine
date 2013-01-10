@@ -10,16 +10,15 @@
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
-Version:	1.0.1
-Release:	5
+Version:	1.1.1
+Release:	1
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://www.clementine-player.org/
 Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
-# Source0-md5:	54dc47eb2de5960cd1654e1249a59bc6
+# Source0-md5:	28e4afb822388bd337a761db8f86febf
 Patch0:		desktop-install.patch
 Patch1:		unbundle-po.patch
-Patch2:		libimobiledevice-1.1.2.patch
 BuildRequires:	QtCore-devel >= %{qtver}
 BuildRequires:	QtDBus-devel >= %{qtver}
 BuildRequires:	QtGui-devel >= %{qtver}
@@ -36,7 +35,8 @@ BuildRequires:	cmake >= 2.6
 BuildRequires:	gettext-devel
 %{?with_static_projectm:BuildRequires:	glew-devel}
 BuildRequires:	glib2-devel
-BuildRequires:	gstreamer-devel >= 0.10
+BuildRequires:	gstreamer0.10-devel
+BuildRequires:	gstreamer0.10-plugins-base-devel
 BuildRequires:	gtest-devel
 BuildRequires:	libgpod-devel >= 0.7.92
 BuildRequires:	libimobiledevice-devel
@@ -65,7 +65,7 @@ Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
 Requires:	QtSingleApplication >= 2.6-4
 %{!?with_static_sqlite:Requires:	QtSql-sqlite3 >= %{qtver}}
-Requires:	gstreamer-audio-effects-base
+Requires:	gstreamer0.10-audio-effects-base
 # while we do not link (yet), we use datafiles
 Requires:	libprojectM
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -87,7 +87,6 @@ a Qt4 előnyeit.
 %setup -q -n %{name}-%{version}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 # We already don't use these but just to make sure
 rm -rf 3rdparty/gmock
@@ -123,6 +122,9 @@ rm -rf $RPM_BUILD_ROOT
 
 rm $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/scalable/apps/application-x-clementine.svg
 
+# not in our glibc?
+rm -r $RPM_BUILD_ROOT%{_localedir}/tr_TR
+
 %find_lang %{name} --with-qm
 
 install -d $RPM_BUILD_ROOT%{_iconsdir}/hicolor/24x24/apps
@@ -144,6 +146,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc Changelog
 %attr(755,root,root) %{_bindir}/clementine
+%attr(755,root,root) %{_bindir}/clementine-tagreader
 %{_desktopdir}/clementine.desktop
 %{_pixmapsdir}/clementine.png
 %{_iconsdir}/hicolor/*/apps/clementine-panel-grey.png
