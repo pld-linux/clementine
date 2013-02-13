@@ -50,6 +50,7 @@ BuildRequires:	libxml2-devel
 BuildRequires:	pkgconfig
 BuildRequires:	pkgconfig
 BuildRequires:	protobuf-devel
+BuildRequires:	qca-devel
 BuildRequires:	qjson-devel
 BuildRequires:	qt4-build >= %{qtver}
 BuildRequires:	qt4-linguist
