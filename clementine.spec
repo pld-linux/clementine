@@ -11,7 +11,7 @@ Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
 Version:	1.1.1
-Release:	2
+Release:	3
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://www.clementine-player.org/
@@ -67,6 +67,7 @@ Requires(post,postun):	hicolor-icon-theme
 Requires:	QtSingleApplication >= 2.6-4
 %{!?with_static_sqlite:Requires:	QtSql-sqlite3 >= %{qtver}}
 Requires:	gstreamer0.10-audio-effects-base
+Requires:	gstreamer0.10-mad
 # while we do not link (yet), we use datafiles
 Requires:	libprojectM
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -85,7 +86,7 @@ az Amarok 1.4 port-ja, néhány funkciója újraírva, hogy kihasználhassa
 a Qt4 előnyeit.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
 %patch0 -p1
 %patch1 -p1
 
@@ -109,7 +110,7 @@ cd build
 %cmake \
 	-DBUNDLE_PROJECTM_PRESETS=OFF \
 	-DUSE_SYSTEM_QTSINGLEAPPLICATION=ON \
-        -DQTSINGLEAPPLICATION_INCLUDE_DIRS=%{_includedir}/qt4/QtSolutions/ \
+	-DQTSINGLEAPPLICATION_INCLUDE_DIRS=%{_includedir}/qt4/QtSolutions/ \
 	-DUSE_SYSTEM_QXT=ON \
 	-DUSE_SYSTEM_PROJECTM=ON \
 	-DSTATIC_SQLITE=%{?with_static_sqlite:ON}%{!?with_static_sqlite:OFF} \
