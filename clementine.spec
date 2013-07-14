@@ -6,12 +6,12 @@
 %bcond_without	static_sqlite	# with static sqlite3
 %bcond_with	static_projectm	# with static projectM
 
-%define     	qtver	%(pkg-config --silence-errors --modversion QtCore 2>/dev/null || echo ERROR)
+%define		qtver	%(pkg-config --silence-errors --modversion QtCore 2>/dev/null || echo ERROR)
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
 Version:	1.1.1
-Release:	3
+Release:	4
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://www.clementine-player.org/
@@ -102,6 +102,8 @@ rm -rf 3rdparty/qtiocompressor
 sed -i -e '/add_subdirectory(tests)/d' CMakeLists.txt
 # remove -Wall
 sed -i -e 's/-Wall//' src/CMakeLists.txt
+# ...and -Werror
+sed -i -e 's/-Werror//' src/CMakeLists.txt
 
 %build
 install -d build
