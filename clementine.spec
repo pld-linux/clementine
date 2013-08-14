@@ -1,6 +1,14 @@
 # TODO:
 # - Gstreamer error: "A text/uri-list decoder plugin is required to play this stream, but not installed."
 # - apply patches to libprojectM.spec and use
+# - checking for module 'libspotify>=12.1.45' - Spotify support: non-GPL binary helper (missing libspotify)
+# - checking for module 'libchromaprint'
+# - Google Drive support (missing Google sparsehash)
+# - package for kde4 stuff (or nuke them):
+#        /usr/share/kde4/services/clementine-feed.protocol
+#        /usr/share/kde4/services/clementine-itms.protocol
+#        /usr/share/kde4/services/clementine-itpc.protocol
+#        /usr/share/kde4/services/clementine-zune.protocol
 #
 # Conditional build:
 %bcond_without	static_sqlite	# with static sqlite3
@@ -11,7 +19,7 @@ Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
 Version:	1.1.1
-Release:	4
+Release:	5
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 URL:		http://www.clementine-player.org/
@@ -109,6 +117,8 @@ sed -i -e 's/-Werror//' src/CMakeLists.txt
 install -d build
 install -d build/src/translations
 cd build
+# as our buildtype is not Release, need to pass these manually. see CMakeLists.txt ~125
+CXXFLAGS="%{rpmcxxflags} -DNDEBUG -DQT_NO_DEBUG_OUTPUT"
 %cmake \
 	-DBUNDLE_PROJECTM_PRESETS=OFF \
 	-DUSE_SYSTEM_QTSINGLEAPPLICATION=ON \
