@@ -1,8 +1,6 @@
 # TODO:
 # - Gstreamer error: "A text/uri-list decoder plugin is required to play this stream, but not installed."
 # - apply patches to libprojectM.spec and use
-# - checking for module 'libspotify>=12.1.45' - Spotify support: non-GPL binary helper (missing libspotify)
-# - checking for module 'libchromaprint'
 # - Google Drive support (missing Google sparsehash)
 # - package for kde4 stuff (or nuke them):
 #        /usr/share/kde4/services/clementine-feed.protocol
@@ -13,6 +11,7 @@
 # Conditional build:
 %bcond_without	static_sqlite	# with static sqlite3
 %bcond_with	static_projectm	# with static projectM
+%bcond_with	libspotify	# build with system libspotify instead of downloading blob
 
 %define		qtver	%(pkg-config --silence-errors --modversion QtCore 2>/dev/null || echo ERROR)
 Summary:	A music player and library organiser
@@ -49,6 +48,8 @@ BuildRequires:	glib2-devel
 BuildRequires:	gstreamer0.10-devel
 BuildRequires:	gstreamer0.10-plugins-base-devel
 BuildRequires:	gtest-devel
+BuildRequires:	libcdio-devel
+BuildRequires:	libchromaprint-devel
 BuildRequires:	libgpod-devel >= 0.7.92
 BuildRequires:	libimobiledevice-devel
 BuildRequires:	libindicate-qt-devel
@@ -57,6 +58,7 @@ BuildRequires:	libmtp-devel
 BuildRequires:	libplist-devel
 %{!?with_static_projectm:BuildRequires:	libprojectM-devel >= 1:2.0.1-4}
 BuildRequires:	libqxt-devel
+%{?with_libspotify:BuildRequires:	libspotify-devel >= 12.1.45}
 BuildRequires:	libxml2-devel
 BuildRequires:	pkgconfig
 BuildRequires:	pkgconfig
