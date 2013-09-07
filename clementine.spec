@@ -11,6 +11,7 @@
 %bcond_without	static_sqlite	# with static sqlite3
 %bcond_with	static_projectm	# with static projectM
 %bcond_with	libspotify	# build with system libspotify instead of downloading blob
+%bcond_without	tests		# build without tests
 
 %define		qtver	%(pkg-config --silence-errors --modversion QtCore 2>/dev/null || echo ERROR)
 Summary:	A music player and library organiser
@@ -28,6 +29,7 @@ Patch1:		unbundle-po.patch
 Patch2:		%{name}-1.1.1-libimobiledevice-fix.patch
 Patch3:		%{name}-dt_categories.patch
 Patch4:		%{name}-mygpo.patch
+Patch5:		%{name}-desktop.patch
 BuildRequires:	QtCore-devel >= %{qtver}
 BuildRequires:	QtDBus-devel >= %{qtver}
 BuildRequires:	QtGui-devel >= %{qtver}
@@ -41,6 +43,7 @@ BuildRequires:	QtXml-devel >= %{qtver}
 BuildRequires:	QtXmlPatterns-devel >= %{qtver}
 BuildRequires:	boost-devel
 BuildRequires:	cmake >= 2.6
+BuildRequires:	desktop-file-utils
 #%{?with_static_projectm:BuildRequires:	ftgl-devel >= 2.1.3}
 BuildRequires:	gettext-devel
 %{?with_static_projectm:BuildRequires:	glew-devel}
@@ -109,6 +112,7 @@ a Qt4 előnyeit.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 # Remove all 3rdparty libraries exceph universalchardet
 # as it is not available as a separate library.
@@ -139,6 +143,10 @@ CXXFLAGS="%{rpmcxxflags} -DNDEBUG -DQT_NO_DEBUG_OUTPUT"
 	..
 %{__make}
 
+%if %{with tests}
+desktop-file-validate ../dist/%{name}.desktop
+%endif
+
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__make} -C build install \
@@ -152,8 +160,8 @@ rm -r $RPM_BUILD_ROOT%{_localedir}/tr_TR
 %find_lang %{name} --with-qm
 
 install -d $RPM_BUILD_ROOT%{_iconsdir}/hicolor/24x24/apps
-cp -a dist/icons/ubuntu-mono-light/clementine-panel-grey.png $RPM_BUILD_ROOT%{_iconsdir}/hicolor/24x24/apps/clementine-panel-grey.png
-cp -a dist/icons/ubuntu-mono-light/clementine-panel.png $RPM_BUILD_ROOT%{_iconsdir}/hicolor/24x24/apps/clementine-panel.png
+cp -p dist/icons/ubuntu-mono-light/clementine-panel-grey.png $RPM_BUILD_ROOT%{_iconsdir}/hicolor/24x24/apps/clementine-panel-grey.png
+cp -p dist/icons/ubuntu-mono-light/clementine-panel.png $RPM_BUILD_ROOT%{_iconsdir}/hicolor/24x24/apps/clementine-panel.png
 
 %clean
 rm -rf $RPM_BUILD_ROOT
