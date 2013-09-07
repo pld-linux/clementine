@@ -28,6 +28,7 @@ Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
 Patch0:		desktop-install.patch
 Patch1:		unbundle-po.patch
 Patch2:		%{name}-1.1.1-libimobiledevice-fix.patch
+Patch3:		%{name}-dt_categories.patch
 BuildRequires:	QtCore-devel >= %{qtver}
 BuildRequires:	QtDBus-devel >= %{qtver}
 BuildRequires:	QtGui-devel >= %{qtver}
@@ -100,6 +101,7 @@ a Qt4 előnyeit.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # We already don't use these but just to make sure
 rm -rf 3rdparty/gmock
