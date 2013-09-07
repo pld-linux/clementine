@@ -51,7 +51,7 @@ BuildRequires:	gtest-devel
 BuildRequires:	libcdio-devel
 BuildRequires:	libchromaprint-devel
 BuildRequires:	libgpod-devel >= 0.7.92
-BuildRequires:	libimobiledevice-devel
+BuildRequires:	libimobiledevice-devel >= 1.1.5
 BuildRequires:	libindicate-qt-devel
 BuildRequires:	liblastfm-devel >= 0.3.3
 BuildRequires:	libmtp-devel
