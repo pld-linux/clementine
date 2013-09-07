@@ -112,3 +112,37 @@ Author: Elan Ruusamäe <glen@pld-linux.org>
 +#  file(APPEND ${_qrc} "</qresource></RCC>")
 +#  qt4_add_resources(${outfiles} ${_qrc})
  endmacro(add_po)
+--- clementine-1.1.1/tests/resources_env.h~	2013-09-08 01:29:59.000000000 +0300
++++ clementine-1.1.1/tests/resources_env.h	2013-09-08 01:30:00.886424405 +0300
+@@ -26,7 +26,7 @@
+ public:
+   void SetUp() {
+     Q_INIT_RESOURCE(data);
+-    Q_INIT_RESOURCE(translations);
++//    Q_INIT_RESOURCE(translations);
+     Q_INIT_RESOURCE(testdata);
+   }
+ };
+--- clementine-1.1.1/tests/translations_test.cpp~	2013-09-08 01:34:17.000000000 +0300
++++ clementine-1.1.1/tests/translations_test.cpp	2013-09-08 01:34:21.084475375 +0300
+@@ -23,14 +23,14 @@
+ #include "test_utils.h"
+ 
+ TEST(Translations, Basic) {
+-  ASSERT_TRUE(QFile::exists(":/translations"));
+-  ASSERT_TRUE(QFile::exists(":/translations/clementine_es.qm"));
++//  ASSERT_TRUE(QFile::exists(":/translations"));
++//  ASSERT_TRUE(QFile::exists(":/translations/clementine_es.qm"));
+ 
+   PoTranslator t;
+   t.load("clementine_es.qm", ":/translations");
+ 
+-  EXPECT_EQ(QString::fromUtf8("Colección"),
+-            t.translate("MainWindow", "Library"));
+-  EXPECT_EQ(QString::fromUtf8("Colección"),
+-            t.translate("", "Library"));
++//  EXPECT_EQ(QString::fromUtf8("Colección"),
++//            t.translate("MainWindow", "Library"));
++//  EXPECT_EQ(QString::fromUtf8("Colección"),
++//            t.translate("", "Library"));
+ }
