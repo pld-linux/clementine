@@ -81,6 +81,7 @@ Requires:	QtSingleApplication >= 2.6-4
 %{!?with_static_sqlite:Requires:	QtSql-sqlite3 >= %{qtver}}
 Requires:	gstreamer0.10-audio-effects-base
 Requires:	gstreamer0.10-mad
+Suggests:	gstreamer0.10-flac
 # while we do not link (yet), we use datafiles
 Requires:	libprojectM
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
