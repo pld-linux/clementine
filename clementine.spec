@@ -1,7 +1,6 @@
 # TODO:
 # - Gstreamer error: "A text/uri-list decoder plugin is required to play this stream, but not installed."
 # - apply patches to libprojectM.spec and use
-# - Google Drive support (missing Google sparsehash)
 # - package for kde4 stuff (or nuke them):
 #        /usr/share/kde4/services/clementine-feed.protocol
 #        /usr/share/kde4/services/clementine-itms.protocol
@@ -71,6 +70,7 @@ BuildRequires:	qt4-qmake
 BuildRequires:	rpmbuild(find_lang) >= 1.33
 BuildRequires:	rpmbuild(macros) >= 1.596
 BuildRequires:	sed >= 4.0
+BuildRequires:	sparsehash-devel
 %{!?with_static_sqlite:BuildRequires:	sqlite3-devel}
 BuildRequires:	taglib-devel >= 1.6
 BuildRequires:	usbmuxd-devel
