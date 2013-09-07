@@ -37,6 +37,7 @@ BuildRequires:	QtSingleApplication-devel >= 2.6-4
 BuildRequires:	QtSql-devel >= %{qtver}
 %{?with_tests:BuildRequires:	QtTest-devel >= %{qtver}}
 BuildRequires:	QtXml-devel >= %{qtver}
+BuildRequires:	QtXmlPatterns-devel >= %{qtver}
 BuildRequires:	boost-devel
 BuildRequires:	cmake >= 2.6
 #%{?with_static_projectm:BuildRequires:	ftgl-devel >= 2.1.3}
