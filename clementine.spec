@@ -43,7 +43,6 @@ BuildRequires:	QtXmlPatterns-devel >= %{qtver}
 BuildRequires:	boost-devel
 BuildRequires:	cmake >= 2.6
 BuildRequires:	desktop-file-utils
-#%{?with_static_projectm:BuildRequires:	ftgl-devel >= 2.1.3}
 BuildRequires:	gettext-devel
 %{?with_static_projectm:BuildRequires:	glew-devel}
 BuildRequires:	glib2-devel
@@ -87,8 +86,8 @@ Requires:	QtSingleApplication >= 2.6-4
 Requires:	gstreamer0.10-audio-effects-base
 Requires:	gstreamer0.10-mad
 Suggests:	gstreamer0.10-flac
-# while we do not link (yet), we use datafiles
-Requires:	libprojectM
+# if we do not link, we use datafiles
+%{!?with_static_projectm:Requires:	libprojectM}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # see libprojectM.spec for explanation
@@ -114,13 +113,13 @@ a Qt4 előnyeit.
 
 # Remove all 3rdparty libraries except:
 # - universalchardet - not available as a separate library.
-# - libprojectM - ?
-# - sah2 - ?
+# - libprojectM - see bcond
+# - sha2 - ?
 # - qocoa - ?
-# - qsqlite - ?
+# - qsqlite - see bcond
 mv 3rdparty 3rdparty.keep
 install -d 3rdparty
-mv 3rdparty.keep/{sha2,qocoa%{?with_static_sqlite:,qsqlite}%{?with_static_projectm:,libprojectM}} 3rdparty
+mv 3rdparty.keep/{sha2,qocoa%{?with_static_sqlite:,qsqlite}%{?with_static_projectm:,libprojectm}} 3rdparty
 
 # Don't build tests. They require gmock
 sed -i -e '/add_subdirectory(tests)/d' CMakeLists.txt
