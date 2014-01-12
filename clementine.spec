@@ -52,6 +52,7 @@ BuildRequires:	gstreamer0.10-plugins-base-devel
 BuildRequires:	gtest-devel
 BuildRequires:	libcdio-devel
 BuildRequires:	libchromaprint-devel
+BuildRequires:	libechonest-devel
 BuildRequires:	libgpod-devel >= 0.7.92
 BuildRequires:	libimobiledevice-devel >= 1.1.5
 BuildRequires:	libindicate-qt-devel
@@ -115,12 +116,11 @@ a Qt4 előnyeit.
 # - universalchardet - not available as a separate library.
 # - libprojectM - ?
 # - sah2 - ?
-# - libechonest - ?
 # - qocoa - ?
 # - qsqlite - ?
 mv 3rdparty 3rdparty.keep
 install -d 3rdparty
-mv 3rdparty.keep/{sha2,libechonest,qocoa%{?with_static_sqlite:,qsqlite}%{?with_static_projectm:,libprojectM}} 3rdparty
+mv 3rdparty.keep/{sha2,qocoa%{?with_static_sqlite:,qsqlite}%{?with_static_projectm:,libprojectM}} 3rdparty
 
 # Don't build tests. They require gmock
 sed -i -e '/add_subdirectory(tests)/d' CMakeLists.txt
