@@ -39,8 +39,8 @@ Author: Elan Ruusamäe <glen@pld-linux.org>
    LoadTranslation("clementine", QDir::currentPath(), language);
  
    // Icons
---- clementine-0.5.3/src/ui/behavioursettingspage.cpp~	2010-10-19 11:24:36.488320486 +0300
-+++ clementine-0.5.3/src/ui/behavioursettingspage.cpp	2010-10-19 11:24:40.594127569 +0300
+--- clementine-1.2.1/src/ui/behavioursettingspage.cpp~	2014-01-12 14:32:52.000000000 +0200
++++ clementine-1.2.1/src/ui/behavioursettingspage.cpp	2014-01-12 14:40:18.083783760 +0200
 @@ -21,6 +21,7 @@
  #include "playlist/playlist.h"
  
@@ -49,36 +49,32 @@ Author: Elan Ruusamäe <glen@pld-linux.org>
  
  
  BehaviourSettingsPage::BehaviourSettingsPage(SettingsDialog* dialog)
-@@ -93,15 +93,22 @@
+@@ -51,17 +51,15 @@
+   ui_->menu_playmode->setItemData(1, MainWindow::PlayBehaviour_IfStopped);
+   ui_->menu_playmode->setItemData(2, MainWindow::PlayBehaviour_Always);
  
-   // Populate the language combo box.  We do this by looking at all the
-   // compiled in translations.
+-  // Populate the language combo box.  We do this by looking at all the
+-  // compiled in translations.
 -  QDir dir(":/translations/");
 -  QStringList codes(dir.entryList(QStringList() << "*.qm"));
 -  QRegExp lang_re("^clementine_(.*).qm$");
 -  foreach (const QString& filename, codes) {
 -    // The regex captures the "ru" from "clementine_ru.qm"
 -    if (!lang_re.exactMatch(filename))
-+//  QDir dir(":/translations/");
+-      continue;
++  // Populate the language combo box
++  // We do this by looking at all the compiled in translations.
 +  QDir localeDir(QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 +  QStringList dirList = localeDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
 +  foreach (const QString& code, dirList) {
 +    if (!QFile::exists(QLibraryInfo::location(QLibraryInfo::TranslationsPath) + "/" + code + "/LC_MESSAGES/clementine.qm")) {
-       continue;
++       continue;
 +    }
  
 -    QString code = lang_re.cap(1);
-+//  QStringList codes(dir.entryList(QStringList() << "*.qm"));
-+//  QRegExp lang_re("^clementine_(.*).qm$");
-+//  foreach (const QString& filename, codes) {
-+//    // The regex captures the "ru" from "clementine_ru.qm"
-+//    if (!lang_re.exactMatch(filename))
-+//      continue;
-+
-+//    QString code = lang_re.cap(1);
-     QString name = QString("%1 (%2)").arg(
-         QLocale::languageToString(QLocale(code).language()), code);
- 
+     QString language_name = QLocale::languageToString(QLocale(code).language());
+ #if QT_VERSION >= 0x040800
+     QString native_name = QLocale(code).nativeLanguageName();
 --- clementine-0.5.3/cmake/Translations.cmake	2010-10-18 23:59:53.487509786 +0300
 +++ clementine-0.5.3/cmake/Translations.cmake	2010-10-19 01:42:52.112825900 +0300
 @@ -65,10 +65,22 @@

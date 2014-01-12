@@ -17,19 +17,18 @@
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
-Version:	1.1.1
-Release:	7
+Version:	1.2.1
+Release:	1
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
-URL:		http://www.clementine-player.org/
 Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
-# Source0-md5:	28e4afb822388bd337a761db8f86febf
+# Source0-md5:	5d079e12f5925845cc7e38ce2f4a1e20
 Patch0:		desktop-install.patch
 Patch1:		unbundle-po.patch
-Patch2:		%{name}-1.1.1-libimobiledevice-fix.patch
 Patch3:		%{name}-dt_categories.patch
 Patch4:		%{name}-mygpo.patch
 Patch5:		%{name}-desktop.patch
+URL:		http://www.clementine-player.org/
 BuildRequires:	QtCore-devel >= %{qtver}
 BuildRequires:	QtDBus-devel >= %{qtver}
 BuildRequires:	QtGui-devel >= %{qtver}
@@ -58,7 +57,7 @@ BuildRequires:	libimobiledevice-devel >= 1.1.5
 BuildRequires:	libindicate-qt-devel
 BuildRequires:	liblastfm-devel >= 0.3.3
 BuildRequires:	libmtp-devel
-BuildRequires:	libmygpo-qt-devel
+BuildRequires:	libmygpo-qt-devel >= 1.0.7
 BuildRequires:	libplist-devel
 %{!?with_static_projectm:BuildRequires:	libprojectM-devel >= 1:2.0.1-4}
 BuildRequires:	libqxt-devel
@@ -87,7 +86,6 @@ Requires:	QtSingleApplication >= 2.6-4
 Requires:	gstreamer0.10-audio-effects-base
 Requires:	gstreamer0.10-mad
 Suggests:	gstreamer0.10-flac
-
 # while we do not link (yet), we use datafiles
 Requires:	libprojectM
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -109,16 +107,20 @@ a Qt4 előnyeit.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
 
-# Remove all 3rdparty libraries exceph universalchardet
-# as it is not available as a separate library.
+# Remove all 3rdparty libraries except:
+# - universalchardet - not available as a separate library.
+# - libprojectM - ?
+# - sah2 - ?
+# - libechonest - ?
+# - qocoa - ?
+# - qsqlite - ?
 mv 3rdparty 3rdparty.keep
 install -d 3rdparty
-mv 3rdparty.keep/{universalchardet,sha2,libechonest,qocoa%{?with_static_sqlite:,qsqlite}%{?with_static_projectm:,libprojectM}} 3rdparty
+mv 3rdparty.keep/{sha2,libechonest,qocoa%{?with_static_sqlite:,qsqlite}%{?with_static_projectm:,libprojectM}} 3rdparty
 
 # Don't build tests. They require gmock
 sed -i -e '/add_subdirectory(tests)/d' CMakeLists.txt
