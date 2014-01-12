@@ -157,6 +157,9 @@ rm $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/scalable/apps/application-x-clementi
 
 # not in our glibc?
 rm -r $RPM_BUILD_ROOT%{_localedir}/tr_TR
+rm -r $RPM_BUILD_ROOT%{_localedir}/he_IL
+rm -r $RPM_BUILD_ROOT%{_localedir}/mk_MK
+rm -r $RPM_BUILD_ROOT%{_localedir}/si_LK
 
 %find_lang %{name} --with-qm
 
