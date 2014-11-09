@@ -17,12 +17,12 @@
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
-Version:	1.2.1
-Release:	3
+Version:	1.2.3
+Release:	1
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
-Source0:	http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
-# Source0-md5:	5d079e12f5925845cc7e38ce2f4a1e20
+Source0:	https://github.com/clementine-player/Clementine/archive/%{version}.tar.gz?/%{name}-%{version}.tar.gz
+# Source0-md5:	725b92ad4699de1b2ffdf48fe01ed092
 Patch0:		desktop-install.patch
 Patch1:		unbundle-po.patch
 Patch3:		%{name}-dt_categories.patch
@@ -104,7 +104,7 @@ az Amarok 1.4 port-ja, néhány funkciója újraírva, hogy kihasználhassa
 a Qt4 előnyeit.
 
 %prep
-%setup -q
+%setup -q -n Clementine-%{version}
 %patch0 -p1
 %patch1 -p1
 %patch3 -p1
