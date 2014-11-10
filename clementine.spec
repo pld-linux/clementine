@@ -28,6 +28,7 @@ Patch1:		unbundle-po.patch
 Patch3:		%{name}-dt_categories.patch
 Patch4:		%{name}-mygpo.patch
 Patch5:		%{name}-desktop.patch
+Patch6:		%{name}-udisks-headers.patch
 URL:		http://www.clementine-player.org/
 BuildRequires:	QtCore-devel >= %{qtver}
 BuildRequires:	QtDBus-devel >= %{qtver}
@@ -110,6 +111,7 @@ a Qt4 előnyeit.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 # Remove all 3rdparty libraries except:
 # - universalchardet - not available as a separate library.
