@@ -44,7 +44,7 @@ BuildRequires:	QtXmlPatterns-devel >= %{qtver}
 BuildRequires:	boost-devel
 BuildRequires:	cmake >= 2.6
 BuildRequires:	desktop-file-utils
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 %{?with_static_projectm:BuildRequires:	glew-devel}
 BuildRequires:	glib2-devel
 BuildRequires:	gstreamer0.10-devel
