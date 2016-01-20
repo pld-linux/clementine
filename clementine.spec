@@ -27,7 +27,6 @@ Source0:	https://github.com/clementine-player/Clementine/releases/download/1.3rc
 # Source0-md5:	c709615f6c5061e5ff1f43bbb1f9255a
 Patch1:		unbundle-po.patch
 Patch4:		%{name}-mygpo.patch
-Patch5:		%{name}-desktop.patch
 Patch6:		%{name}-udisks-headers.patch
 URL:		http://www.clementine-player.org/
 BuildRequires:	QtCore-devel >= %{qtver}
@@ -111,7 +110,6 @@ a Qt4 előnyeit.
 %setup -q -n %{name}-%{version}%{subver}
 %patch1 -p1
 #%patch4 -p1
-#%patch5 -p1
 #%patch6 -p1
 
 # cleanup vendor. keep only needed libraries.
