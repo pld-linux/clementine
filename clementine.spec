@@ -110,7 +110,7 @@ a Qt4 előnyeit.
 %setup -q -n %{name}-%{version}%{subver}
 %patch1 -p1
 #%patch4 -p1
-#%patch6 -p1
+%patch6 -p1
 
 # cleanup vendor. keep only needed libraries.
 mv 3rdparty 3rdparty.dist
