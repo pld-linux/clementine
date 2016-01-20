@@ -164,7 +164,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/scalable/apps/application-x-clementine.svg
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/kde4/services
 
 # not in our glibc?
 rm -r $RPM_BUILD_ROOT%{_localedir}/tr_TR
@@ -195,6 +195,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/clementine
 %attr(755,root,root) %{_bindir}/clementine-tagreader
 %{_desktopdir}/clementine.desktop
-%{_pixmapsdir}/clementine.png
 %{_iconsdir}/hicolor/*/apps/clementine-panel-grey.png
 %{_iconsdir}/hicolor/*/apps/clementine-panel.png
+%{_iconsdir}/hicolor/*/apps/clementine.png
+%{_iconsdir}/hicolor/*/apps/clementine.svg
+%{_datadir}/appdata/clementine.appdata.xml
