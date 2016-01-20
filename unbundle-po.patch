@@ -12,8 +12,8 @@ TODO: make it configurable via cmake params.
 
 Author: Elan Ruusamäe <glen@pld-linux.org>
 
---- clementine-0.5.3/src/main.cpp~	2010-10-18 23:59:12.000000000 +0300
-+++ clementine-0.5.3/src/main.cpp	2010-10-18 23:59:15.876170584 +0300
+--- clementine-1.3.0rc1/src/main.cpp~	2016-01-20 17:03:12.000000000 +0200
++++ clementine-1.3.0rc1/src/main.cpp	2016-01-20 17:04:21.767206898 +0200
 @@ -176,7 +176,7 @@
  
    // Resources
@@ -23,12 +23,14 @@ Author: Elan Ruusamäe <glen@pld-linux.org>
  
    // Has the user forced a different language?
    QString language = options.language();
-@@ -187,9 +187,15 @@
-   }
+@@ -417,10 +417,15 @@
+                                : override_language;
  
    // Translations
+-  LoadTranslation("qt", QLibraryInfo::location(QLibraryInfo::TranslationsPath),
+-                  language);
 +  // Qt: system path
-   LoadTranslation("qt", QLibraryInfo::location(QLibraryInfo::TranslationsPath), language);
++  LoadTranslation("qt", QLibraryInfo::location(QLibraryInfo::TranslationsPath), language);
 +  // Clementine: system path
 +  LoadTranslation("clementine", QLibraryInfo::location(QLibraryInfo::TranslationsPath), language);
 +  // Clementine: QRC
@@ -38,9 +40,9 @@ Author: Elan Ruusamäe <glen@pld-linux.org>
 +  // Clementine: current dir
    LoadTranslation("clementine", QDir::currentPath(), language);
  
-   // Icons
---- clementine-1.2.1/src/ui/behavioursettingspage.cpp~	2014-01-12 14:32:52.000000000 +0200
-+++ clementine-1.2.1/src/ui/behavioursettingspage.cpp	2014-01-12 14:40:18.083783760 +0200
+ #ifdef Q_OS_WIN32
+--- clementine-1.3.0rc1/src/ui/behavioursettingspage.cpp~	2016-01-20 17:03:12.000000000 +0200
++++ clementine-1.3.0rc1/src/ui/behavioursettingspage.cpp	2016-01-20 17:06:51.358232182 +0200
 @@ -21,6 +21,7 @@
  #include "playlist/playlist.h"
  
@@ -49,19 +51,18 @@ Author: Elan Ruusamäe <glen@pld-linux.org>
  
  
  BehaviourSettingsPage::BehaviourSettingsPage(SettingsDialog* dialog)
-@@ -51,17 +51,15 @@
-   ui_->menu_playmode->setItemData(1, MainWindow::PlayBehaviour_IfStopped);
-   ui_->menu_playmode->setItemData(2, MainWindow::PlayBehaviour_Always);
+@@ -60,16 +60,15 @@
+   ui_->menu_previousmode->setItemData(0, Player::PreviousBehaviour_DontRestart);
+   ui_->menu_previousmode->setItemData(1, Player::PreviousBehaviour_Restart);
  
 -  // Populate the language combo box.  We do this by looking at all the
 -  // compiled in translations.
 -  QDir dir(":/translations/");
 -  QStringList codes(dir.entryList(QStringList() << "*.qm"));
 -  QRegExp lang_re("^clementine_(.*).qm$");
--  foreach (const QString& filename, codes) {
+-  for (const QString& filename : codes) {
 -    // The regex captures the "ru" from "clementine_ru.qm"
--    if (!lang_re.exactMatch(filename))
--      continue;
+-    if (!lang_re.exactMatch(filename)) continue;
 +  // Populate the language combo box
 +  // We do this by looking at all the compiled in translations.
 +  QDir localeDir(QLibraryInfo::location(QLibraryInfo::TranslationsPath));
@@ -72,9 +73,9 @@ Author: Elan Ruusamäe <glen@pld-linux.org>
 +    }
  
 -    QString code = lang_re.cap(1);
-     QString language_name = QLocale::languageToString(QLocale(code).language());
- #if QT_VERSION >= 0x040800
-     QString native_name = QLocale(code).nativeLanguageName();
+     QString lookup_code = QString(code)
+                               .replace("@latin", "_Latn")
+                               .replace("_CN", "_Hans_CN")
 --- clementine-0.5.3/cmake/Translations.cmake	2010-10-18 23:59:53.487509786 +0300
 +++ clementine-0.5.3/cmake/Translations.cmake	2010-10-19 01:42:52.112825900 +0300
 @@ -65,10 +65,22 @@

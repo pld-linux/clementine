@@ -1,7 +1,7 @@
 # TODO:
 # - Gstreamer error: "A text/uri-list decoder plugin is required to play this stream, but not installed."
 # - apply patches to libprojectM.spec and use
-# - package for kde4 stuff (or nuke them):
+# - sub-package for kde4 stuff (or nuke them):
 #        /usr/share/kde4/services/clementine-feed.protocol
 #        /usr/share/kde4/services/clementine-itms.protocol
 #        /usr/share/kde4/services/clementine-itpc.protocol
@@ -13,19 +13,19 @@
 %bcond_with	libspotify	# build with system libspotify instead of downloading blob
 %bcond_without	tests		# build without tests
 
+%define		rel		0.1
+%define		subver	rc1
 %define		qtver	%(pkg-config --silence-errors --modversion QtCore 2>/dev/null || echo ERROR)
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
-Version:	1.2.3
-Release:	2
+Version:	1.3.0
+Release:	0.%{subver}.%{rel}
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
-Source0:	https://github.com/clementine-player/Clementine/archive/%{version}.tar.gz?/%{name}-%{version}.tar.gz
-# Source0-md5:	725b92ad4699de1b2ffdf48fe01ed092
-Patch0:		desktop-install.patch
+Source0:	https://github.com/clementine-player/Clementine/releases/download/1.3rc1/%{name}-%{version}%{subver}.tar.xz
+# Source0-md5:	c709615f6c5061e5ff1f43bbb1f9255a
 Patch1:		unbundle-po.patch
-Patch3:		%{name}-dt_categories.patch
 Patch4:		%{name}-mygpo.patch
 Patch5:		%{name}-desktop.patch
 Patch6:		%{name}-udisks-headers.patch
@@ -79,6 +79,8 @@ BuildRequires:	sed >= 4.0
 BuildRequires:	sparsehash-devel
 %{!?with_static_sqlite:BuildRequires:	sqlite3-devel}
 BuildRequires:	taglib-devel >= 1.6
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
@@ -105,13 +107,11 @@ az Amarok 1.4 port-ja, néhány funkciója újraírva, hogy kihasználhassa
 a Qt4 előnyeit.
 
 %prep
-%setup -q -n Clementine-%{version}
-%patch0 -p1
+%setup -q -n %{name}-%{version}%{subver}
 %patch1 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
+#%patch4 -p1
+#%patch5 -p1
+#%patch6 -p1
 
 # Remove all 3rdparty libraries except:
 # - universalchardet - not available as a separate library.
@@ -138,8 +138,6 @@ vendor sha2 qocoa
 sed -i -e '/add_subdirectory(tests)/d' CMakeLists.txt
 # remove -Wall
 sed -i -e 's/-Wall//' src/CMakeLists.txt
-# ...and -Werror
-sed -i -e 's/-Werror//' src/CMakeLists.txt
 
 %build
 install -d build
@@ -148,6 +146,7 @@ cd build
 # as our buildtype is not Release, need to pass these manually. see CMakeLists.txt ~125
 CXXFLAGS="%{rpmcxxflags} -DNDEBUG -DQT_NO_DEBUG_OUTPUT"
 %cmake \
+	-DBUILD_WERROR:BOOL=OFF \
 	-DCMAKE_INCLUDE_PATH=%{_includedir}/qt4 \
 	-DBUNDLE_PROJECTM_PRESETS=OFF \
 	-DUSE_SYSTEM_QTSINGLEAPPLICATION=ON \
