@@ -43,6 +43,7 @@ BuildRequires:	QtXml-devel >= %{qtver}
 BuildRequires:	QtXmlPatterns-devel >= %{qtver}
 BuildRequires:	boost-devel
 BuildRequires:	cmake >= 2.6
+BuildRequires:	cryptopp-devel >= 5.6.1-4
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext-tools
 %{?with_static_projectm:BuildRequires:	glew-devel}
