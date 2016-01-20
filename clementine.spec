@@ -114,14 +114,7 @@ a Qt4 előnyeit.
 #%patch5 -p1
 #%patch6 -p1
 
-# Remove all 3rdparty libraries except:
-# - universalchardet - not available as a separate library.
-# - libprojectM - see bcond
-# - sha2 - ?
-# - qocoa - ?
-# - qsqlite - see bcond
 # cleanup vendor. keep only needed libraries.
-# (the rest are packaged with system packages)
 mv 3rdparty 3rdparty.dist
 vendor() {
 	local path dir
@@ -134,6 +127,10 @@ vendor() {
 vendor sha2 qocoa
 %{?with_static_sqlite:vendor qsqlite}
 %{?with_static_projectm:vendor libprojectm}
+# missing in pld
+vendor vreen
+# temporary for 1.3.0
+vendor libmygpo-qt
 
 # Don't build tests. They require gmock
 sed -i -e '/add_subdirectory(tests)/d' CMakeLists.txt
