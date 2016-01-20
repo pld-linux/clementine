@@ -63,6 +63,7 @@ BuildRequires:	libplist-devel
 %{!?with_static_projectm:BuildRequires:	libprojectM-devel >= 1:2.0.1-4}
 BuildRequires:	libqxt-devel
 %{?with_libspotify:BuildRequires:	libspotify-devel >= 12.1.45}
+BuildRequires:	libusbmuxd-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	pkgconfig
 BuildRequires:	pkgconfig
@@ -78,7 +79,6 @@ BuildRequires:	sed >= 4.0
 BuildRequires:	sparsehash-devel
 %{!?with_static_sqlite:BuildRequires:	sqlite3-devel}
 BuildRequires:	taglib-devel >= 1.6
-BuildRequires:	usbmuxd-devel
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
