@@ -119,9 +119,20 @@ a Qt4 előnyeit.
 # - sha2 - ?
 # - qocoa - ?
 # - qsqlite - see bcond
-mv 3rdparty 3rdparty.keep
-install -d 3rdparty
-mv 3rdparty.keep/{sha2,qocoa%{?with_static_sqlite:,qsqlite}%{?with_static_projectm:,libprojectm}} 3rdparty
+# cleanup vendor. keep only needed libraries.
+# (the rest are packaged with system packages)
+mv 3rdparty 3rdparty.dist
+vendor() {
+	local path dir
+	for path; do
+		dir=$(dirname $path)
+		test -d 3rdparty/$dir || mkdir -p 3rdparty/$dir
+		mv 3rdparty.dist/$path 3rdparty/$path
+	done
+}
+vendor sha2 qocoa
+%{?with_static_sqlite:vendor qsqlite}
+%{?with_static_projectm:vendor libprojectm}
 
 # Don't build tests. They require gmock
 sed -i -e '/add_subdirectory(tests)/d' CMakeLists.txt
