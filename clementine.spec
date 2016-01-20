@@ -18,7 +18,7 @@ Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
 Version:	1.2.3
-Release:	1
+Release:	2
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 Source0:	https://github.com/clementine-player/Clementine/archive/%{version}.tar.gz?/%{name}-%{version}.tar.gz
@@ -148,12 +148,13 @@ cd build
 # as our buildtype is not Release, need to pass these manually. see CMakeLists.txt ~125
 CXXFLAGS="%{rpmcxxflags} -DNDEBUG -DQT_NO_DEBUG_OUTPUT"
 %cmake \
+	-DCMAKE_INCLUDE_PATH=%{_includedir}/qt4 \
 	-DBUNDLE_PROJECTM_PRESETS=OFF \
 	-DUSE_SYSTEM_QTSINGLEAPPLICATION=ON \
-	-DQTSINGLEAPPLICATION_INCLUDE_DIRS=%{_includedir}/qt4/QtSolutions/ \
 	-DUSE_SYSTEM_QXT=ON \
 	-DUSE_SYSTEM_PROJECTM=ON \
 	-DSTATIC_SQLITE=%{?with_static_sqlite:ON}%{!?with_static_sqlite:OFF} \
+	-DQTSINGLEAPPLICATION_INCLUDE_DIRS=%{_includedir}/qt4/QtSolutions \
 	..
 %{__make}
 
