@@ -57,7 +57,7 @@ BuildRequires:	libgpod-devel >= 0.7.92
 BuildRequires:	libimobiledevice-devel >= 1.1.5
 BuildRequires:	libindicate-qt-devel
 BuildRequires:	liblastfm-devel >= 0.3.3
-BuildRequires:	libmtp-devel
+BuildRequires:	libmtp-devel >= 1.0
 BuildRequires:	libmygpo-qt-devel >= 1.0.7
 BuildRequires:	libplist-devel
 %{!?with_static_projectm:BuildRequires:	libprojectM-devel >= 1:2.0.1-4}
@@ -78,7 +78,7 @@ BuildRequires:	rpmbuild(macros) >= 1.596
 BuildRequires:	sed >= 4.0
 BuildRequires:	sparsehash-devel
 %{!?with_static_sqlite:BuildRequires:	sqlite3-devel}
-BuildRequires:	taglib-devel >= 1.6
+BuildRequires:	taglib-devel >= 1.8
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires(post,postun):	desktop-file-utils
@@ -127,7 +127,7 @@ vendor sha2 qocoa
 %{?with_static_projectm:vendor libprojectm}
 # missing in pld
 vendor vreen
-# temporary for 1.3.0
+# requires 1.0.9, but only 1.0.8 is released
 vendor libmygpo-qt
 
 # Don't build tests. They require gmock
@@ -139,7 +139,7 @@ sed -i -e 's/-Wall//' src/CMakeLists.txt
 install -d build
 install -d build/src/translations
 cd build
-# as our buildtype is not Release, need to pass these manually. see CMakeLists.txt ~125
+# as our buildtype is not Release, need to pass these manually. see CMakeLists.txt ~135
 CXXFLAGS="%{rpmcxxflags} -DNDEBUG -DQT_NO_DEBUG_OUTPUT"
 %cmake \
 	-DBUILD_WERROR:BOOL=OFF \
