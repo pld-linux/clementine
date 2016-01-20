@@ -73,7 +73,7 @@ BuildRequires:	qjson-devel
 BuildRequires:	qt4-build >= %{qtver}
 BuildRequires:	qt4-linguist
 BuildRequires:	qt4-qmake
-BuildRequires:	rpmbuild(find_lang) >= 1.33
+BuildRequires:	rpmbuild(find_lang) >= 1.38
 BuildRequires:	rpmbuild(macros) >= 1.596
 BuildRequires:	sed >= 4.0
 BuildRequires:	sparsehash-devel
