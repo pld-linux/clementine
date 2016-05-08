@@ -13,18 +13,16 @@
 %bcond_with	libspotify	# build with system libspotify instead of downloading blob
 %bcond_without	tests		# build without tests
 
-%define		rel		0.1
-%define		subver	rc1
 %define		qtver	%(pkg-config --silence-errors --modversion QtCore 2>/dev/null || echo ERROR)
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
-Version:	1.3.0
-Release:	0.%{subver}.%{rel}
+Version:	1.3.1
+Release:	1
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
-Source0:	https://github.com/clementine-player/Clementine/releases/download/1.3rc1/%{name}-%{version}%{subver}.tar.xz
-# Source0-md5:	c709615f6c5061e5ff1f43bbb1f9255a
+Source0:	https://github.com/clementine-player/Clementine/releases/download/%{version}/%{name}-%{version}.tar.xz
+# Source0-md5:	18cc5f66aa5fbb2781198a65439bd38a
 Patch1:		unbundle-po.patch
 Patch4:		%{name}-mygpo.patch
 Patch6:		%{name}-udisks-headers.patch
@@ -107,7 +105,7 @@ az Amarok 1.4 port-ja, néhány funkciója újraírva, hogy kihasználhassa
 a Qt4 előnyeit.
 
 %prep
-%setup -q -n %{name}-%{version}%{subver}
+%setup -q
 %patch1 -p1
 #%patch4 -p1
 %patch6 -p1
@@ -143,6 +141,7 @@ cd build
 CXXFLAGS="%{rpmcxxflags} -DNDEBUG -DQT_NO_DEBUG_OUTPUT"
 %cmake \
 	-DBUILD_WERROR:BOOL=OFF \
+	-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
 	-DCMAKE_INCLUDE_PATH=%{_includedir}/qt4 \
 	-DBUNDLE_PROJECTM_PRESETS=OFF \
 	-DUSE_SYSTEM_QTSINGLEAPPLICATION=ON \
