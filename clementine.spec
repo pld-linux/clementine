@@ -14,11 +14,12 @@
 %bcond_without	tests		# build without tests
 
 %define		qtver	%(pkg-config --silence-errors --modversion QtCore 2>/dev/null || echo ERROR)
+%define		sqlitever	3.14.0-2
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
 Version:	1.3.1
-Release:	1
+Release:	2
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 Source0:	https://github.com/clementine-player/Clementine/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -75,13 +76,14 @@ BuildRequires:	rpmbuild(find_lang) >= 1.38
 BuildRequires:	rpmbuild(macros) >= 1.596
 BuildRequires:	sed >= 4.0
 BuildRequires:	sparsehash-devel
-%{!?with_static_sqlite:BuildRequires:	sqlite3-devel}
+%{!?with_static_sqlite:BuildRequires:	sqlite3-devel >= %{sqlitever}}
 BuildRequires:	taglib-devel >= 1.8
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
+%{!?with_static_sqlite:BuildRequires:	sqlite3 >= %{sqlitever}}
 Requires:	QtSingleApplication >= 2.6-4
 %{!?with_static_sqlite:Requires:	QtSql-sqlite3 >= %{qtver}}
 Requires:	gstreamer0.10-audio-effects-base
