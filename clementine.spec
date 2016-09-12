@@ -10,7 +10,7 @@
 # Conditional build:
 %bcond_with	static_projectm	# with static projectM
 %bcond_with	libspotify	# build with system libspotify instead of downloading blob
-%bcond_without	tests		# build without tests
+%bcond_with	tests		# build without tests
 
 %define		qtver	%(pkg-config --silence-errors --modversion QtCore 2>/dev/null || echo ERROR)
 %define		sqlitever	3.14.0-2
@@ -37,7 +37,6 @@ BuildRequires:	QtSingleApplication-devel >= 2.6-4
 BuildRequires:	QtSql-devel >= %{qtver}
 %{?with_tests:BuildRequires:	QtTest-devel >= %{qtver}}
 BuildRequires:	QtXml-devel >= %{qtver}
-BuildRequires:	QtXmlPatterns-devel >= %{qtver}
 BuildRequires:	boost-devel
 BuildRequires:	cmake >= 2.6
 BuildRequires:	cryptopp-devel >= 5.6.1-4
@@ -53,7 +52,6 @@ BuildRequires:	libchromaprint-devel
 BuildRequires:	libechonest-devel
 BuildRequires:	libgpod-devel >= 0.7.92
 BuildRequires:	libimobiledevice-devel >= 1.1.5
-BuildRequires:	libindicate-qt-devel
 BuildRequires:	liblastfm-devel >= 0.3.3
 BuildRequires:	libmtp-devel >= 1.0
 BuildRequires:	libmygpo-qt-devel >= 1.0.7
@@ -66,7 +64,6 @@ BuildRequires:	libxml2-devel
 BuildRequires:	pkgconfig
 BuildRequires:	pkgconfig
 BuildRequires:	protobuf-devel
-BuildRequires:	qca-devel
 BuildRequires:	qjson-devel
 BuildRequires:	qt4-build >= %{qtver}
 BuildRequires:	qt4-linguist
@@ -152,8 +149,9 @@ CXXFLAGS="%{rpmcxxflags} -DNDEBUG -DQT_NO_DEBUG_OUTPUT"
 	..
 %{__make}
 
-%if %{with tests}
 desktop-file-validate ../dist/%{name}.desktop
+
+%if %{with tests}
 %endif
 
 %install
