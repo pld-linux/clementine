@@ -45,8 +45,8 @@ BuildRequires:	desktop-file-utils
 BuildRequires:	gettext-tools
 %{?with_static_projectm:BuildRequires:	glew-devel}
 BuildRequires:	glib2-devel
-BuildRequires:	gstreamer0.10-devel
-BuildRequires:	gstreamer0.10-plugins-base-devel
+BuildRequires:	gstreamer-devel
+BuildRequires:	gstreamer-plugins-base-devel
 BuildRequires:	gtest-devel
 BuildRequires:	libcdio-devel
 BuildRequires:	libchromaprint-devel
@@ -85,9 +85,9 @@ Requires(post,postun):	hicolor-icon-theme
 BuildRequires:	sqlite3 >= %{sqlitever}
 Requires:	QtSingleApplication >= 2.6-4
 Requires:	QtSql-sqlite3 >= %{qtver}
-Requires:	gstreamer0.10-audio-effects-base
-Requires:	gstreamer0.10-mad
-Suggests:	gstreamer0.10-flac
+Requires:	gstreamer-audio-effects-base
+Requires:	gstreamer-mad
+Suggests:	gstreamer-flac
 # if we do not link, we use datafiles
 %{!?with_static_projectm:Requires:	libprojectM}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
