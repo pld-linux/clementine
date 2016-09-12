@@ -8,7 +8,6 @@
 #        /usr/share/kde4/services/clementine-zune.protocol
 #
 # Conditional build:
-%bcond_without	static_sqlite	# with static sqlite3
 %bcond_with	static_projectm	# with static projectM
 %bcond_with	libspotify	# build with system libspotify instead of downloading blob
 %bcond_without	tests		# build without tests
@@ -19,7 +18,7 @@ Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
 Version:	1.3.1
-Release:	2
+Release:	3
 License:	GPL v3 and GPL v2+
 Group:		Applications/Multimedia
 Source0:	https://github.com/clementine-player/Clementine/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -31,7 +30,7 @@ URL:		http://www.clementine-player.org/
 BuildRequires:	QtCore-devel >= %{qtver}
 BuildRequires:	QtDBus-devel >= %{qtver}
 BuildRequires:	QtGui-devel >= %{qtver}
-BuildRequires:	QtIOCompressor-devel
+BuildRequires:	QtIOCompressor-devel >= 2.3
 BuildRequires:	QtNetwork-devel >= %{qtver}
 BuildRequires:	QtOpenGL-devel >= %{qtver}
 BuildRequires:	QtSingleApplication-devel >= 2.6-4
@@ -76,16 +75,16 @@ BuildRequires:	rpmbuild(find_lang) >= 1.38
 BuildRequires:	rpmbuild(macros) >= 1.596
 BuildRequires:	sed >= 4.0
 BuildRequires:	sparsehash-devel
-%{!?with_static_sqlite:BuildRequires:	sqlite3-devel >= %{sqlitever}}
+BuildRequires:	sqlite3-devel >= %{sqlitever}
 BuildRequires:	taglib-devel >= 1.8
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
-%{!?with_static_sqlite:BuildRequires:	sqlite3 >= %{sqlitever}}
+BuildRequires:	sqlite3 >= %{sqlitever}
 Requires:	QtSingleApplication >= 2.6-4
-%{!?with_static_sqlite:Requires:	QtSql-sqlite3 >= %{qtver}}
+Requires:	QtSql-sqlite3 >= %{qtver}
 Requires:	gstreamer0.10-audio-effects-base
 Requires:	gstreamer0.10-mad
 Suggests:	gstreamer0.10-flac
@@ -123,7 +122,7 @@ vendor() {
 	done
 }
 vendor sha2 qocoa
-%{?with_static_sqlite:vendor qsqlite}
+vendor qsqlite
 %{?with_static_projectm:vendor libprojectm}
 # missing in pld
 vendor vreen
@@ -149,7 +148,6 @@ CXXFLAGS="%{rpmcxxflags} -DNDEBUG -DQT_NO_DEBUG_OUTPUT"
 	-DUSE_SYSTEM_QTSINGLEAPPLICATION=ON \
 	-DUSE_SYSTEM_QXT=ON \
 	-DUSE_SYSTEM_PROJECTM=ON \
-	-DSTATIC_SQLITE=%{?with_static_sqlite:ON}%{!?with_static_sqlite:OFF} \
 	-DQTSINGLEAPPLICATION_INCLUDE_DIRS=%{_includedir}/qt4/QtSolutions \
 	..
 %{__make}
