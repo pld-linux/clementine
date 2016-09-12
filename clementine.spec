@@ -20,12 +20,12 @@ Name:		clementine
 Version:	1.3.1
 Release:	3
 License:	GPL v3 and GPL v2+
-Group:		Applications/Multimedia
+Group:		X11/Applications/Multimedia
 Source0:	https://github.com/clementine-player/Clementine/releases/download/%{version}/%{name}-%{version}.tar.xz
 # Source0-md5:	18cc5f66aa5fbb2781198a65439bd38a
 Patch1:		unbundle-po.patch
-Patch4:		%{name}-mygpo.patch
-Patch6:		%{name}-udisks-headers.patch
+Patch2:		%{name}-udisks-headers.patch
+Patch3:		%{name}-mygpo.patch
 URL:		http://www.clementine-player.org/
 BuildRequires:	QtCore-devel >= %{qtver}
 BuildRequires:	QtDBus-devel >= %{qtver}
@@ -108,8 +108,8 @@ a Qt4 előnyeit.
 %prep
 %setup -q
 %patch1 -p1
-#%patch4 -p1
-%patch6 -p1
+%patch2 -p1
+#%patch3 -p1
 
 # cleanup vendor. keep only needed libraries.
 mv 3rdparty 3rdparty.dist
