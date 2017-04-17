@@ -26,6 +26,7 @@ Source0:	https://github.com/clementine-player/Clementine/releases/download/%{ver
 Patch1:		unbundle-po.patch
 Patch2:		%{name}-udisks-headers.patch
 Patch3:		%{name}-mygpo.patch
+Patch4:		moc.patch
 URL:		http://www.clementine-player.org/
 BuildRequires:	QtCore-devel >= %{qtver}
 BuildRequires:	QtDBus-devel >= %{qtver}
@@ -107,6 +108,7 @@ a Qt4 előnyeit.
 %patch1 -p1
 %patch2 -p1
 #%patch3 -p1
+%patch4 -p1
 
 # cleanup vendor. keep only needed libraries.
 mv 3rdparty 3rdparty.dist

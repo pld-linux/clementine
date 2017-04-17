@@ -1,0 +1,370 @@
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/dist/clementine.spec /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/dist/clementine.spec
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/dist/clementine.spec	2016-04-19 17:43:17.000000000 +0200
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/dist/clementine.spec	2017-04-17 13:40:28.400686245 +0200
+@@ -91,5 +91,5 @@
+ %{_datadir}/icons/hicolor/scalable/apps/clementine.svg
+ 
+ %changelog
+-* Tue Apr 19 2016 David Sansome <me@davidsansome.com> - 1.3.1
++* Mon Apr 17 2017 David Sansome <me@davidsansome.com> - 1.3.1
+ - Version 1.3.1
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/core/organise.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/core/organise.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/core/organise.h	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/core/organise.h	2017-04-17 13:47:08.050705259 +0200
+@@ -28,8 +28,10 @@
+ #include <QObject>
+ #include <QTemporaryFile>
+ 
++#ifndef Q_MOC_RUN
+ #include "organiseformat.h"
+ #include "transcoder/transcoder.h"
++#endif
+ 
+ class MusicStorage;
+ class TaskManager;
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/core/songloader.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/core/songloader.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/core/songloader.h	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/core/songloader.h	2017-04-17 13:47:52.098480736 +0200
+@@ -26,7 +26,9 @@
+ #include <functional>
+ #include <memory>
+ 
++#ifndef Q_MOC_RUN
+ #include <gst/gst.h>
++#endif
+ 
+ #include <QObject>
+ #include <QThreadPool>
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/devices/cddadevice.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/devices/cddadevice.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/devices/cddadevice.h	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/devices/cddadevice.h	2017-04-17 13:57:56.667079915 +0200
+@@ -20,6 +20,7 @@
+ 
+ #include <QMutex>
+ 
++#ifndef Q_MOC_RUN
+ // These must come after Qt includes (issue 3247)
+ #include <cdio/cdio.h>
+ #include <gst/audio/gstaudiocdsrc.h>
+@@ -28,6 +29,7 @@
+ #include "connecteddevice.h"
+ #include "core/song.h"
+ #include "musicbrainz/musicbrainzclient.h"
++#endif
+ 
+ class CddaDevice : public ConnectedDevice {
+   Q_OBJECT
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/devices/cddasongloader.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/devices/cddasongloader.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/devices/cddasongloader.h	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/devices/cddasongloader.h	2017-04-17 13:58:10.834104995 +0200
+@@ -22,12 +22,14 @@
+ #include <QObject>
+ #include <QUrl>
+ 
++#ifndef Q_MOC_RUN
+ // These must come after Qt includes (issue 3247)
+ #include <cdio/cdio.h>
+ #include <gst/audio/gstaudiocdsrc.h>
+ 
+ #include "core/song.h"
+ #include "musicbrainz/musicbrainzclient.h"
++#endif
+ 
+ // This class provides a (hopefully) nice, high level interface to get CD
+ // information and load tracks
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/devices/giolister.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/devices/giolister.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/devices/giolister.h	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/devices/giolister.h	2017-04-17 13:57:40.673341979 +0200
+@@ -18,15 +18,19 @@
+ #ifndef GIOLISTER_H
+ #define GIOLISTER_H
+ 
++#ifndef Q_MOC_RUN
+ #include "devicelister.h"
+ #include "core/scopedgobject.h"
++#endif
+ 
+ // Work around compile issue with glib >= 2.25
+ #ifdef signals
+ #undef signals
+ #endif
+ 
++#ifndef Q_MOC_RUN
+ #include <gio/gio.h>
++#endif
+ 
+ #include <QMutex>
+ #include <QStringList>
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/devices/gpoddevice.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/devices/gpoddevice.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/devices/gpoddevice.h	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/devices/gpoddevice.h	2017-04-17 13:56:23.918067310 +0200
+@@ -24,7 +24,9 @@
+ #include <QMutex>
+ #include <QWaitCondition>
+ 
++#ifndef Q_MOC_RUN
+ #include <gpod/itdb.h>
++#endif
+ 
+ class GPodLoader;
+ 
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/devices/gpodloader.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/devices/gpodloader.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/devices/gpodloader.h	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/devices/gpodloader.h	2017-04-17 13:56:42.741876682 +0200
+@@ -22,9 +22,11 @@
+ 
+ #include <QObject>
+ 
++#ifndef Q_MOC_RUN
+ #include <gpod/itdb.h>
+ 
+ #include "core/song.h"
++#endif
+ 
+ class ConnectedDevice;
+ class LibraryBackend;
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/engines/gstelementdeleter.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/engines/gstelementdeleter.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/engines/gstelementdeleter.h	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/engines/gstelementdeleter.h	2017-04-17 13:50:39.442698729 +0200
+@@ -20,7 +20,9 @@
+ 
+ #include <QObject>
+ 
++#ifndef Q_MOC_RUN
+ #include <gst/gst.h>
++#endif
+ 
+ class GstElementDeleter : public QObject {
+   Q_OBJECT
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/engines/gstengine.cpp /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/engines/gstengine.cpp
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/engines/gstengine.cpp	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/engines/gstengine.cpp	2017-04-17 13:49:27.607553791 +0200
+@@ -38,7 +38,9 @@
+ #include <QDir>
+ #include <QtConcurrentRun>
+ 
++#ifndef Q_MOC_RUN
+ #include <gst/gst.h>
++#endif
+ 
+ #include "config.h"
+ #include "devicefinder.h"
+@@ -49,9 +51,11 @@
+ #include "core/timeconstants.h"
+ #include "core/utilities.h"
+ 
++#ifndef Q_MOC_RUN
+ #ifdef HAVE_MOODBAR
+ #include "gst/moodbar/plugin.h"
+ #endif
++#endif
+ 
+ #ifdef HAVE_LIBPULSE
+ #include "engines/pulsedevicefinder.h"
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/engines/gstengine.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/engines/gstengine.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/engines/gstengine.h	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/engines/gstengine.h	2017-04-17 13:49:50.114787923 +0200
+@@ -24,7 +24,9 @@
+ 
+ #include <memory>
+ 
++#ifndef Q_MOC_RUN
+ #include <gst/gst.h>
++#endif
+ 
+ #include <QFuture>
+ #include <QHash>
+@@ -33,9 +35,11 @@
+ #include <QStringList>
+ #include <QTimerEvent>
+ 
++#ifndef Q_MOC_RUN
+ #include "bufferconsumer.h"
+ #include "enginebase.h"
+ #include "core/timeconstants.h"
++#endif
+ 
+ class QTimer;
+ class QTimerEvent;
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/engines/gstenginepipeline.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/engines/gstenginepipeline.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/engines/gstenginepipeline.h	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/engines/gstenginepipeline.h	2017-04-17 13:50:14.402067082 +0200
+@@ -28,7 +28,9 @@
+ #include <QTimeLine>
+ #include <QUrl>
+ 
++#ifndef Q_MOC_RUN
+ #include <gst/gst.h>
++#endif
+ 
+ #include "engine_fwd.h"
+ 
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/moodbar/moodbarpipeline.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/moodbar/moodbarpipeline.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/moodbar/moodbarpipeline.h	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/moodbar/moodbarpipeline.h	2017-04-17 13:58:31.724633544 +0200
+@@ -21,8 +21,10 @@
+ #include <QObject>
+ #include <QUrl>
+ 
++#ifndef Q_MOC_RUN
+ #include <gst/gst.h>
+ #include <gst/app/gstappsink.h>
++#endif
+ 
+ #include <memory>
+ 
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/networkremote/incomingdataparser.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/networkremote/incomingdataparser.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/networkremote/incomingdataparser.h	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/networkremote/incomingdataparser.h	2017-04-17 13:52:45.279208411 +0200
+@@ -1,10 +1,12 @@
+ #ifndef INCOMINGDATAPARSER_H
+ #define INCOMINGDATAPARSER_H
+ 
++#ifndef Q_MOC_RUN
+ #include "core/player.h"
+ #include "core/application.h"
+ #include "remotecontrolmessages.pb.h"
+ #include "remoteclient.h"
++#endif
+ 
+ class IncomingDataParser : public QObject {
+   Q_OBJECT
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/networkremote/networkremote.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/networkremote/networkremote.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/networkremote/networkremote.h	2016-04-19 17:43:09.000000000 +0200
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/networkremote/networkremote.h	2017-04-17 13:52:12.321709516 +0200
+@@ -6,11 +6,13 @@
+ #include <QTcpServer>
+ #include <QTcpSocket>
+ 
++#ifndef Q_MOC_RUN
+ #include "core/player.h"
+ #include "core/application.h"
+ #include "incomingdataparser.h"
+ #include "outgoingdatacreator.h"
+ #include "remoteclient.h"
++#endif
+ 
+ class NetworkRemote : public QObject {
+   Q_OBJECT
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/networkremote/networkremotehelper.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/networkremote/networkremotehelper.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/networkremote/networkremotehelper.h	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/networkremote/networkremotehelper.h	2017-04-17 13:51:51.207843139 +0200
+@@ -3,7 +3,9 @@
+ 
+ #include <QThread>
+ 
++#ifndef Q_MOC_RUN
+ #include "networkremote.h"
++#endif
+ 
+ class NetworkRemoteHelper : public QObject {
+   Q_OBJECT
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/networkremote/outgoingdatacreator.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/networkremote/outgoingdatacreator.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/networkremote/outgoingdatacreator.h	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/networkremote/outgoingdatacreator.h	2017-04-17 13:53:01.996297288 +0200
+@@ -10,6 +10,7 @@
+ #include <QMap>
+ #include <QQueue>
+ 
++#ifndef Q_MOC_RUN
+ #include "core/player.h"
+ #include "core/application.h"
+ #include "engines/enginebase.h"
+@@ -27,6 +28,7 @@
+ #include "songinfo/ultimatelyricsreader.h"
+ #include "remotecontrolmessages.pb.h"
+ #include "remoteclient.h"
++#endif
+ 
+ typedef QList<SongInfoProvider*> ProviderList;
+ 
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/networkremote/remoteclient.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/networkremote/remoteclient.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/networkremote/remoteclient.h	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/networkremote/remoteclient.h	2017-04-17 13:53:18.116704477 +0200
+@@ -5,10 +5,12 @@
+ #include <QTcpSocket>
+ #include <QBuffer>
+ 
++#ifndef Q_MOC_RUN
+ #include "songsender.h"
+ 
+ #include "core/application.h"
+ #include "remotecontrolmessages.pb.h"
++#endif
+ 
+ class RemoteClient : public QObject {
+   Q_OBJECT
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/networkremote/songsender.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/networkremote/songsender.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/networkremote/songsender.h	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/networkremote/songsender.h	2017-04-17 13:53:34.757124849 +0200
+@@ -5,10 +5,12 @@
+ #include <QQueue>
+ #include <QUrl>
+ 
++#ifndef Q_MOC_RUN
+ #include "remotecontrolmessages.pb.h"
+ 
+ #include "core/song.h"
+ #include "transcoder/transcoder.h"
++#endif
+ 
+ class Application;
+ class RemoteClient;
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/transcoder/transcoder.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/transcoder/transcoder.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/transcoder/transcoder.h	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/transcoder/transcoder.h	2017-04-17 13:54:09.638006165 +0200
+@@ -20,7 +20,9 @@
+ 
+ #include <memory>
+ 
++#ifndef Q_MOC_RUN
+ #include <gst/gst.h>
++#endif
+ 
+ #include <QObject>
+ #include <QStringList>
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/visualisations/projectmvisualisation.cpp /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/visualisations/projectmvisualisation.cpp
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/visualisations/projectmvisualisation.cpp	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/visualisations/projectmvisualisation.cpp	2017-04-17 13:55:41.280322530 +0200
+@@ -15,10 +15,12 @@
+    along with Clementine.  If not, see <http://www.gnu.org/licenses/>.
+ */
+ 
++#ifndef Q_MOC_RUN
+ #include "config.h"
+ #include "projectmpresetmodel.h"
+ #include "projectmvisualisation.h"
+ #include "visualisationcontainer.h"
++#endif
+ 
+ #include <QCoreApplication>
+ #include <QDir>
+@@ -33,6 +35,7 @@
+ #include <QtDebug>
+ #include <QTimerEvent>
+ 
++#ifndef Q_MOC_RUN
+ #ifdef USE_SYSTEM_PROJECTM
+ #include <libprojectM/projectM.hpp>
+ #else
+@@ -45,6 +48,7 @@
+ #else
+ #include <GL/gl.h>
+ #endif
++#endif
+ 
+ ProjectMVisualisation::ProjectMVisualisation(QObject* parent)
+     : QGraphicsScene(parent),
+diff -ur /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/visualisations/projectmvisualisation.h /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/visualisations/projectmvisualisation.h
+--- /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1/src/visualisations/projectmvisualisation.h	2015-12-15 13:13:23.000000000 +0100
++++ /home/users/baggins/devel/PLD/rpm/BUILD/clementine-1.3.1-moc/src/visualisations/projectmvisualisation.h	2017-04-17 13:56:02.010846681 +0200
+@@ -24,7 +24,9 @@
+ #include <QBasicTimer>
+ #include <QSet>
+ 
++#ifndef Q_MOC_RUN
+ #include "engines/bufferconsumer.h"
++#endif
+ 
+ class projectM;
+ 
