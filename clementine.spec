@@ -18,7 +18,7 @@ Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
 Version:	1.3.1
-Release:	7
+Release:	8
 License:	GPL v3 and GPL v2+
 Group:		X11/Applications/Multimedia
 Source0:	https://github.com/clementine-player/Clementine/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -139,7 +139,7 @@ install -d build
 install -d build/src/translations
 cd build
 # as our buildtype is not Release, need to pass these manually. see CMakeLists.txt ~135
-CXXFLAGS="%{rpmcxxflags} -DNDEBUG -DQT_NO_DEBUG_OUTPUT"
+CXXFLAGS="%{rpmcxxflags} -fpermissive -DNDEBUG -DQT_NO_DEBUG_OUTPUT"
 %cmake \
 	-DBUILD_WERROR:BOOL=OFF \
 	-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
