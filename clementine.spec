@@ -18,7 +18,7 @@ Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
 Version:	1.3.1
-Release:	6
+Release:	7
 License:	GPL v3 and GPL v2+
 Group:		X11/Applications/Multimedia
 Source0:	https://github.com/clementine-player/Clementine/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -84,8 +84,9 @@ BuildRequires:	sqlite3 >= %{sqlitever}
 Requires:	QtSingleApplication >= 2.6-4
 Requires:	QtSql-sqlite3 >= %{qtver}
 Requires:	gstreamer-audio-effects-base
-Requires:	gstreamer-mad
 Suggests:	gstreamer-flac
+Suggests:	gstreamer-libav
+Suggests:	gstreamer-mpg123
 # if we do not link, we use datafiles
 %{!?with_static_projectm:Requires:	libprojectM}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
