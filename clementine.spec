@@ -12,41 +12,45 @@
 %bcond_with	libspotify	# build with system libspotify instead of downloading blob
 %bcond_with	tests		# build without tests
 
-%define		qtver	%(pkg-config --silence-errors --modversion QtCore 2>/dev/null || echo ERROR)
-%define		sqlitever	3.14.0-2
+%define		qt_ver	4.5.0
+%define		qt_installed	%(pkg-config --silence-errors --modversion QtCore 2>/dev/null || echo ERROR)
+%define		sqlite_ver	3.14.0-2
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Name:		clementine
 Version:	1.3.1
-Release:	9
+Release:	10
 License:	GPL v3 and GPL v2+
 Group:		X11/Applications/Multimedia
 Source0:	https://github.com/clementine-player/Clementine/releases/download/%{version}/%{name}-%{version}.tar.xz
 # Source0-md5:	18cc5f66aa5fbb2781198a65439bd38a
+Patch0:		%{name}-c++.patch
 Patch1:		unbundle-po.patch
 Patch2:		%{name}-udisks-headers.patch
 Patch3:		%{name}-mygpo.patch
 Patch4:		moc.patch
 URL:		http://www.clementine-player.org/
-BuildRequires:	QtCore-devel >= %{qtver}
-BuildRequires:	QtDBus-devel >= %{qtver}
-BuildRequires:	QtGui-devel >= %{qtver}
+BuildRequires:	OpenGL-devel
+BuildRequires:	QtCore-devel >= %{qt_ver}
+BuildRequires:	QtDBus-devel >= %{qt_ver}
+BuildRequires:	QtGui-devel >= %{qt_ver}
 BuildRequires:	QtIOCompressor-devel >= 2.3
-BuildRequires:	QtNetwork-devel >= %{qtver}
-BuildRequires:	QtOpenGL-devel >= %{qtver}
+BuildRequires:	QtNetwork-devel >= %{qt_ver}
+BuildRequires:	QtOpenGL-devel >= %{qt_ver}
 BuildRequires:	QtSingleApplication-devel >= 2.6-4
-BuildRequires:	QtSql-devel >= %{qtver}
-%{?with_tests:BuildRequires:	QtTest-devel >= %{qtver}}
-BuildRequires:	QtXml-devel >= %{qtver}
+BuildRequires:	QtSql-devel >= %{qt_ver}
+%{?with_tests:BuildRequires:	QtTest-devel >= %{qt_ver}}
+BuildRequires:	QtXml-devel >= %{qt_ver}
 BuildRequires:	boost-devel
 BuildRequires:	cmake >= 2.6
 BuildRequires:	cryptopp-devel >= 5.6.1-4
 BuildRequires:	desktop-file-utils
+BuildRequires:	fftw3-devel
 BuildRequires:	gettext-tools
 %{?with_static_projectm:BuildRequires:	glew-devel}
-BuildRequires:	glib2-devel
-BuildRequires:	gstreamer-devel
-BuildRequires:	gstreamer-plugins-base-devel
+BuildRequires:	glib2-devel >= 2.0
+BuildRequires:	gstreamer-devel >= 1.0
+BuildRequires:	gstreamer-plugins-base-devel >= 1.0
 BuildRequires:	gtest-devel
 BuildRequires:	libcdio-devel
 BuildRequires:	libchromaprint-devel
@@ -55,34 +59,34 @@ BuildRequires:	libgpod-devel >= 0.7.92
 BuildRequires:	libimobiledevice-devel >= 1.1.5
 BuildRequires:	liblastfm-devel >= 0.3.3
 BuildRequires:	libmtp-devel >= 1.0
-BuildRequires:	libmygpo-qt-devel >= 1.0.7
+#BuildRequires:	libmygpo-qt-devel >= 1.0.9
 BuildRequires:	libplist-devel
 %{!?with_static_projectm:BuildRequires:	libprojectM-devel >= 1:2.0.1-4}
 BuildRequires:	libqxt-devel
 %{?with_libspotify:BuildRequires:	libspotify-devel >= 12.1.45}
 BuildRequires:	libusbmuxd-devel
-BuildRequires:	libxml2-devel
-BuildRequires:	pkgconfig
+BuildRequires:	libxml2-devel >= 2.0
 BuildRequires:	pkgconfig
 BuildRequires:	protobuf-devel
+BuildRequires:	pulseaudio-devel
 BuildRequires:	qjson-devel
-BuildRequires:	qt4-build >= %{qtver}
+BuildRequires:	qt4-build >= %{qt_ver}
 BuildRequires:	qt4-linguist
 BuildRequires:	qt4-qmake
 BuildRequires:	rpmbuild(find_lang) >= 1.38
 BuildRequires:	rpmbuild(macros) >= 1.596
 BuildRequires:	sed >= 4.0
 BuildRequires:	sparsehash-devel
-BuildRequires:	sqlite3-devel >= %{sqlitever}
+BuildRequires:	sqlite3-devel >= %{sqlite_ver}
 BuildRequires:	taglib-devel >= 1.8
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
-BuildRequires:	sqlite3 >= %{sqlitever}
+BuildRequires:	sqlite3 >= %{sqlite_ver}
 Requires:	QtSingleApplication >= 2.6-4
-Requires:	QtSql-sqlite3 >= %{qtver}
+Requires:	QtSql-sqlite3 >= %{qt_installed}
 Requires:	gstreamer-audio-effects-base
 Suggests:	gstreamer-flac
 Suggests:	gstreamer-libav
@@ -106,13 +110,14 @@ a Qt4 előnyeit.
 
 %prep
 %setup -q
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 #%patch3 -p1
 %patch4 -p1
 
 # cleanup vendor. keep only needed libraries.
-mv 3rdparty 3rdparty.dist
+%{__mv} 3rdparty 3rdparty.dist
 vendor() {
 	local path dir
 	for path; do
@@ -164,11 +169,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__rm} -r $RPM_BUILD_ROOT%{_datadir}/kde4/services
 
-# not in our glibc?
-rm -r $RPM_BUILD_ROOT%{_localedir}/tr_TR
-rm -r $RPM_BUILD_ROOT%{_localedir}/he_IL
-rm -r $RPM_BUILD_ROOT%{_localedir}/mk_MK
-rm -r $RPM_BUILD_ROOT%{_localedir}/si_LK
+# unify locale codes
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/{mk_MK,mk}
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/{si_LK,si}
+# empty copies of il,tr
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/he_IL
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/tr_TR
 
 %find_lang %{name} --with-qm
 
