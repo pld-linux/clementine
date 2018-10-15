@@ -17,9 +17,10 @@
 %define		sqlite_ver	3.14.0-2
 Summary:	A music player and library organiser
 Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
+Summary(pl.UTF-8):	Odtwarzacz muzyki i organizator biblioteczki
 Name:		clementine
 Version:	1.3.1
-Release:	12
+Release:	13
 License:	GPL v3 and GPL v2+
 Group:		X11/Applications/Multimedia
 Source0:	https://github.com/clementine-player/Clementine/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -108,6 +109,11 @@ Clementine egy modern zenelejátszó és gyűjtemény kezelő. Túlnyomórészt
 az Amarok 1.4 port-ja, néhány funkciója újraírva, hogy kihasználhassa
 a Qt4 előnyeit.
 
+%description -l pl.UTF-8
+Clementine to nowoczesny odtwarzacz muzyki i organizator biblioteczki.
+Jest w dużej części portem Amaroka 1.4 z niektórymi funkcjami
+przepisanymi tak, aby wykorzystać Qt4.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -135,12 +141,11 @@ vendor vreen
 vendor libmygpo-qt
 
 # Don't build tests. They require gmock
-sed -i -e '/add_subdirectory(tests)/d' CMakeLists.txt
+%{__sed} -i -e '/add_subdirectory(tests)/d' CMakeLists.txt
 # remove -Wall
-sed -i -e 's/-Wall//' src/CMakeLists.txt
+%{__sed} -i -e 's/-Wall//' src/CMakeLists.txt
 
 %build
-install -d build
 install -d build/src/translations
 cd build
 # as our buildtype is not Release, need to pass these manually. see CMakeLists.txt ~135
@@ -164,6 +169,7 @@ desktop-file-validate ../dist/%{name}.desktop
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
