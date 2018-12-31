@@ -30,6 +30,8 @@ Patch1:		unbundle-po.patch
 Patch2:		%{name}-udisks-headers.patch
 Patch3:		%{name}-mygpo.patch
 Patch4:		moc.patch
+Patch5:		%{name}-protobuf.patch
+Patch6:		%{name}-cryptopp.patch
 URL:		http://www.clementine-player.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	QtCore-devel >= %{qt_ver}
@@ -121,6 +123,8 @@ przepisanymi tak, aby wykorzystać Qt4.
 %patch2 -p1
 #%patch3 -p1
 %patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 # cleanup vendor. keep only needed libraries.
 %{__mv} 3rdparty 3rdparty.dist

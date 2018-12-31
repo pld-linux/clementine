@@ -1,0 +1,23 @@
+--- /home/comp/rpm/BUILD/clementine-1.3.1/src/internet/spotify/spotifyblobdownloader.cpp.orig	2016-01-28 15:51:24.000000000 +0100
++++ /home/comp/rpm/BUILD/clementine-1.3.1/src/internet/spotify/spotifyblobdownloader.cpp	2018-12-31 19:20:49.438080352 +0100
+@@ -189,7 +189,7 @@
+ 
+   try {
+     CryptoPP::ByteQueue bytes;
+-    bytes.Put(reinterpret_cast<const byte*>(public_key_data.constData()),
++    bytes.Put(reinterpret_cast<const CryptoPP::byte*>(public_key_data.constData()),
+               public_key_data.size());
+     bytes.MessageEnd();
+ 
+@@ -204,9 +204,9 @@
+       actual_filename.remove(kSignatureSuffix);
+ 
+       const bool result = verifier.VerifyMessage(
+-          reinterpret_cast<const byte*>(file_data[actual_filename].constData()),
++          reinterpret_cast<const CryptoPP::byte*>(file_data[actual_filename].constData()),
+           file_data[actual_filename].size(),
+-          reinterpret_cast<const byte*>(
++          reinterpret_cast<const CryptoPP::byte*>(
+               file_data[signature_filename].constData()),
+           file_data[signature_filename].size());
+       qLog(Debug) << "Verifying" << actual_filename << "against"
