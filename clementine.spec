@@ -20,7 +20,7 @@ Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Summary(pl.UTF-8):	Odtwarzacz muzyki i organizator biblioteczki
 Name:		clementine
 Version:	1.3.1
-Release:	18
+Release:	19
 License:	GPL v3 and GPL v2+
 Group:		X11/Applications/Multimedia
 Source0:	https://github.com/clementine-player/Clementine/releases/download/%{version}/%{name}-%{version}.tar.xz
