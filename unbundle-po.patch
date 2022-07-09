@@ -12,18 +12,17 @@ TODO: make it configurable via cmake params.
 
 Author: Elan Ruusamäe <glen@pld-linux.org>
 
---- clementine-1.3.0rc1/src/main.cpp~	2016-01-20 17:03:12.000000000 +0200
-+++ clementine-1.3.0rc1/src/main.cpp	2016-01-20 17:04:21.767206898 +0200
-@@ -176,7 +176,7 @@
+--- clementine-1.3.1/src/main.cpp.orig	2016-04-19 17:43:09.000000000 +0200
++++ clementine-1.3.1/src/main.cpp	2022-07-09 07:56:27.319171455 +0200
+@@ -396,7 +396,6 @@ int main(int argc, char* argv[]) {
  
    // Resources
    Q_INIT_RESOURCE(data);
 -  Q_INIT_RESOURCE(translations);
-+  //Q_INIT_RESOURCE(translations);
  
-   // Has the user forced a different language?
-   QString language = options.language();
-@@ -417,10 +417,15 @@
+   // Add root CA cert for SoundCloud, whose certificate is missing on OS X.
+   QSslSocket::addDefaultCaCertificates(
+@@ -417,10 +416,15 @@ int main(int argc, char* argv[]) {
                                 : override_language;
  
    // Translations
@@ -41,17 +40,17 @@ Author: Elan Ruusamäe <glen@pld-linux.org>
    LoadTranslation("clementine", QDir::currentPath(), language);
  
  #ifdef Q_OS_WIN32
---- clementine-1.3.0rc1/src/ui/behavioursettingspage.cpp~	2016-01-20 17:03:12.000000000 +0200
-+++ clementine-1.3.0rc1/src/ui/behavioursettingspage.cpp	2016-01-20 17:06:51.358232182 +0200
-@@ -21,6 +21,7 @@
- #include "playlist/playlist.h"
+--- clementine-1.3.1/src/ui/behavioursettingspage.cpp.orig	2015-12-15 13:13:23.000000000 +0100
++++ clementine-1.3.1/src/ui/behavioursettingspage.cpp	2022-07-09 07:58:06.261968769 +0200
+@@ -23,6 +23,7 @@
+ #include "playlist/playlisttabbar.h"
  
  #include <QDir>
 +#include <QLibraryInfo>
  
- 
- BehaviourSettingsPage::BehaviourSettingsPage(SettingsDialog* dialog)
-@@ -60,16 +60,15 @@
+ namespace {
+ bool LocaleAwareCompare(const QString& a, const QString& b) {
+@@ -59,16 +60,15 @@ BehaviourSettingsPage::BehaviourSettings
    ui_->menu_previousmode->setItemData(0, Player::PreviousBehaviour_DontRestart);
    ui_->menu_previousmode->setItemData(1, Player::PreviousBehaviour_Restart);
  
