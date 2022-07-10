@@ -20,7 +20,7 @@ Summary(hu.UTF-8):	Egy zenelejátszó és gyűjtemény-kezelő
 Summary(pl.UTF-8):	Odtwarzacz muzyki i organizator biblioteczki
 Name:		clementine
 Version:	1.3.1
-Release:	22
+Release:	23
 License:	GPL v3 and GPL v2+
 Group:		X11/Applications/Multimedia
 Source0:	https://github.com/clementine-player/Clementine/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -32,6 +32,7 @@ Patch3:		%{name}-mygpo.patch
 Patch4:		moc.patch
 Patch5:		%{name}-protobuf.patch
 Patch6:		%{name}-cryptopp.patch
+Patch7:		%{name}-gcc11.patch
 URL:		https://www.clementine-player.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	QtCore-devel >= %{qt_ver}
@@ -125,6 +126,7 @@ przepisanymi tak, aby wykorzystać Qt4.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 # cleanup vendor. keep only needed libraries.
 %{__mv} 3rdparty 3rdparty.dist
