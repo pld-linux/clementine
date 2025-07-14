@@ -119,14 +119,14 @@ przepisanymi tak, aby wykorzystać Qt4.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p1
 #%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
+%patch -P4 -p1
+%patch -P5 -p1
+%patch -P6 -p1
+%patch -P7 -p1
 
 # cleanup vendor. keep only needed libraries.
 %{__mv} 3rdparty 3rdparty.dist
