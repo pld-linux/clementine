@@ -122,7 +122,7 @@ przepisanymi tak, aby wykorzystać Qt4.
 %patch -P0 -p1
 %patch -P1 -p1
 %patch -P2 -p1
-#%patch3 -p1
+#%%patch3 -p1
 %patch -P4 -p1
 %patch -P5 -p1
 %patch -P6 -p1
