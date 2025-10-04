@@ -8,9 +8,9 @@
 #        /usr/share/kde4/services/clementine-zune.protocol
 #
 # Conditional build:
-%bcond_with	static_projectm	# with static projectM
-%bcond_with	libspotify	# build with system libspotify instead of downloading blob
-%bcond_with	tests		# build without tests
+%bcond_with	static_projectm	# static projectM
+%bcond_with	libspotify	# system libspotify instead of downloading blob
+%bcond_with	tests		# test suite
 
 %define		qt_ver		4.5.0
 %define		qt_installed	%(pkg-config --silence-errors --modversion QtCore 2>/dev/null || echo ERROR)
@@ -58,7 +58,7 @@ BuildRequires:	gstreamer-plugins-base-devel >= 1.0
 BuildRequires:	gtest-devel
 BuildRequires:	libcdio-devel
 BuildRequires:	libchromaprint-devel
-BuildRequires:	libechonest-devel
+BuildRequires:	libechonest-devel >= 2.3.1-2
 BuildRequires:	libgpod-devel >= 0.7.92
 BuildRequires:	libimobiledevice-devel >= 1.1.5
 BuildRequires:	liblastfm-devel >= 0.3.3
@@ -135,7 +135,7 @@ vendor() {
 	for path; do
 		dir=$(dirname $path)
 		test -d 3rdparty/$dir || mkdir -p 3rdparty/$dir
-		mv 3rdparty.dist/$path 3rdparty/$path
+		%{__mv} 3rdparty.dist/$path 3rdparty/$path
 	done
 }
 vendor sha2 qocoa
@@ -150,6 +150,13 @@ vendor libmygpo-qt
 %{__sed} -i -e '/add_subdirectory(tests)/d' CMakeLists.txt
 # remove -Wall
 %{__sed} -i -e 's/-Wall//' src/CMakeLists.txt
+
+# don't lower C++ standard
+%{__sed} -i -e 's/ --std=c++0x//' gst/moodbar/CMakeLists.txt
+%{__sed} -i -e '/--std=c++0x/d' 3rdparty/vreen/CMakeLists.txt ext/libclementine-common/CMakeLists.txt ext/libclementine-tagreader/CMakeLists.txt
+%{__sed} -i -e '/-std=c++0x/d' 3rdparty/vreen/vreen/cmake/CommonUtils.cmake
+%{__sed} -i -e 's/ -std=gnu++11//' ext/clementine-spotifyblob/CMakeLists.txt src/CMakeLists.txt
+%{__sed} -i -e '/-std=gnu++11/d' ext/clementine-tagreader/CMakeLists.txt
 
 %build
 install -d build/src/translations
